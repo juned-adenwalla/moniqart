@@ -1,0 +1,71 @@
+.topBarContainer {
+    width: 100%;
+    height: 45px;
+    background-color: #B92929 !important;
+}
+
+.navbar {
+    width: 100%;
+    margin-top: 35px;
+    background-color: transparent;
+}
+
+.navbar-brand img {
+    width: 130px;
+}
+
+
+
+
+.topBarContainer p{
+    margin: 0;
+}
+
+.topBarContainer p{
+    font-size: 15px;
+    color: white;
+}
+
+.topBarContainer p i{
+    background: white;
+    color: #F55050;
+    padding: 0.3rem;
+    border-radius: 50%;
+}
+
+
+.topBarContainer i{
+    font-size: 15px;
+    color: white;
+}
+
+
+.topBarContainer select{
+    background: transparent;
+    outline: none;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.topBarContainer option{
+    color: #000;
+}
+
+/* TopBar */
+
+
+/* Banner */
+/* 
+.banner-image {
+    background-image: url('assets/images/banner/header.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: -53px;
+    height: 600px;
+}
+
+.banner-image h2 {
+    font-size: 50px;
+} */

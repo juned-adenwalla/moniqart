@@ -1,0 +1,632 @@
+:root {
+    /* Colors */
+
+    --primary-color: #b92929;
+    --secondary-color: #B2B2B2;
+
+    /* Fonts */
+    --primary-font: "Poppins", sans-serif;
+    --secondary-font: 'Montserrat', sans-serif;
+
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: var(--primary-font);
+}
+
+/* common classes */
+
+body {
+    overflow-x: hidden;
+}
+
+p {
+    color: var(--secondary-color);
+    font-family: var(--secondary-font);
+}
+
+
+h2.circleAndLine {
+    font-size: 29px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--primary-color) !important;
+    position: relative;
+    text-align: center;
+}
+
+h2.circleAndLine::before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 150px;
+    height: 2.5px;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+h2.circleAndLine::after {
+    content: "";
+    position: absolute;
+    bottom: -19px;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    transform: translateX(-50%);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* TopBar  */
+
+.topBarContainer {
+    width: 100%;
+    height: 45px;
+    background-color: var(--primary-color) !important;
+}
+
+.navbar {
+    width: 100%;
+    margin-top: 35px;
+    background-color: transparent;
+}
+
+.navbar-brand img {
+    width: 130px;
+}
+
+.topBarContainer p {
+    margin: 0;
+}
+
+.topBarContainer p {
+    font-size: 15px;
+    color: white;
+}
+
+.topBarContainer p i {
+    background: white;
+    color: var(--primary-color);
+    padding: 0.3rem;
+    border-radius: 50%;
+}
+
+.topBarContainer i {
+    font-size: 15px;
+    color: white;
+}
+
+.topBarContainer select {
+    background: transparent;
+    outline: none;
+    border: none;
+    color: #ffffff;
+    font-size: 18px;
+}
+
+.topBarContainer option {
+    color: #000;
+}
+
+/* TopBar */
+
+/* banner */
+
+.banner-image {
+    background-image: url("../../../assets/images/banner/jesus_christ_bg.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-top: -53px;
+    height: 600px;
+}
+
+/* banner ends */
+
+
+/* creative section */
+.creative_section {}
+
+.creative_col h3 {
+    font-size: 2.1rem;
+}
+
+.creative_col h5 {
+    font-size: 1.5rem;
+}
+
+/* creative section ends */
+
+
+/* Courses */
+
+
+/* Course Container */
+
+.coursesContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    background: url("../../../assets/images/banner/redbg.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.coursesContainer h2 {
+    color: #fff !important;
+}
+
+.coursesContainer h2::before {
+    background: #fff !important;
+}
+
+.coursesContainer h2::after {
+    border-color: #fff !important;
+    background: var(--primary-color);
+}
+
+.coursesContainer p {
+    color: #fff !important;
+}
+
+.coursesContainer .courses__card {
+    height: 530px;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 20px;
+    background: #fff;
+}
+
+
+.coursesContainer .courses__card .imgDiv {
+    width: 100%;
+    height: 480px;
+}
+
+
+.coursesContainer .courses__card:hover .content {
+    margin-top: -50px;
+}
+
+
+.coursesContainer .courses__card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.coursesContainer .content {
+    width: 100%;
+    height: 100px;
+    transition: 0.3s;
+}
+
+.coursesContainer .headingDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.coursesContainer .headingDiv span {
+    width: calc(100% - 100px);
+    height: 50px;
+    font-size: 17px;
+    font-weight: 600;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.coursesContainer .headingDiv button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+}
+
+.coursesContainer .headingDiv button:nth-child(2) {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.coursesContainer .headingDiv button i {
+    font-size: 21px;
+    color: var(--light-black);
+}
+
+
+.coursesContainer .paragraphDiv {
+    width: 100%;
+    background: rgba(255, 255, 255, 1);
+    z-index: 100;
+}
+
+.coursesContainer .paragraphDiv p {
+    text-align: center;
+    font-size: 15px;
+    padding: 0.3rem 0.5rem;
+    color: var(--secondary-color) !important;
+}
+
+/* Courses ends */
+
+
+/* ubiquity */
+
+.ubiquityContainer {
+    width: 100vw;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    background: url("../../../assets/images/banner/building_bg.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    display: none;
+}
+
+.ubiquityContainer img {
+    width: 60vw;
+}
+
+/* .ubiquityContainer h2 {
+    font-size: 35px;
+    font-weight: 800;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+} */
+/* 
+
+
+.ubiquityContainer p {
+    padding: 0 4rem;
+    font-size: 19px;
+    color: #000000;
+    text-align: center;
+} */
+
+
+/* ubiquity ends */
+
+
+ /* Subscription Container */
+
+ .subscriptionContainer {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+.subscriptionCard {
+    height: 400px;
+    position: relative;
+}
+
+.subscriptionCard .circle {
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+}
+
+.subscriptionCard .imgDiv {
+    height: 350px;
+    border: 1.4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    border-bottom: none;
+}
+
+.subscriptionCard button {
+    border: none;
+    outline: none;
+    background: #000;
+    color: #fff ;
+    font-size: 18px;
+    font-style: italic;
+    width: 100%;
+    height: 50px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transition: 0.4s;
+}
+
+.subscriptionCard button:hover {
+    background: var(--primary-color);
+}
+
+/* Subscription ends */
+
+/* Count */
+
+.countContainer {
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+    background: url("../../../assets/images/banner/redbg.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.countContainer h3 {
+    color: #fff;
+    font-weight: 700;
+    /* line-height: 130px; */
+    margin: 0;
+}
+
+.countContainer span {
+    /* font-size: 16px; */
+    color: #fff;
+    font-weight: 700;
+}
+
+
+
+/* Count ends */
+
+/* Blogs  */
+
+.blogsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+
+
+.blog__card {
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+.blog__card .imgDiv {
+    width: 100%;
+    height: 300px;
+    z-index: -100;
+}
+
+.blog__card .imgDiv img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.blog__card .content {
+    padding: 0.5rem 0.8rem;
+}
+
+.blog__card .content h2 {
+    font-size: 16px;
+    color: #000000;
+    font-weight: 700;
+}
+
+.blog__card .content p {
+    font-size: 14px;
+    color: var(--light-black);
+    font-weight: 400;
+    margin: 0;
+}
+
+.blog__card .date {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 0 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.blog__card .date span {
+    font-size: 12px;
+    color: var(--light-black);
+}
+
+.blog__card .date span i {
+    font-size: 16px;
+}
+
+.blog__card .date button {
+    width: 55px;
+    height: 40px;
+    border: none;
+    outline: none;
+    background-color: var(--secondary-color-color);
+    padding: 0;
+    font-size: 13px;
+    color: var(--light-black);
+}
+
+.blog__card .date button:nth-child(2) {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.blog__card .date button i {
+    font-size: 16px;
+    color: var(--light-black);
+    margin-right: 0.3rem;
+
+}
+
+/* Blogs ends */
+
+
+
+/* Footer */
+
+footer {
+    width: 100%;
+    background: #252525;
+}
+
+.footer__list h2 {
+    font-size: 21px;
+    color: #fff;
+}
+
+.footer__list p {
+    font-size: 15px;
+    color: var(--secondary-color);
+}
+
+.footer__list span {
+    font-size: 15px;
+    color: var(--secondary-color);
+}
+
+.footer__list span i {
+    font-size: 20px;
+    margin-right: 0.5rem;
+}
+
+.footer__list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer__list ul li {
+    list-style: none;
+}
+
+.footer__list ul li a {
+    text-decoration: none;
+    font-size: 16px;
+    color: var(--secondary-color);
+    font-style: italic;
+}
+
+.form input {
+    outline: none;
+    border: none;
+    width: 100%;
+    background: #3b3b3b;
+    font-size: 15px;
+    font-style: italic;
+    color: var(--secondary-color);
+    padding: 1rem 1.4rem;
+    margin-bottom: 1rem;
+}
+
+.form input::placeholder {
+    color: var(--secondary-color);
+}
+
+.form textarea {
+    width: 100%;
+    outline: none;
+    border: none;
+    background: #3b3b3b;
+    font-size: 15px;
+    color: var(--secondary-color);
+    padding: 1rem 1.4rem;
+
+}
+
+.form button {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    font-style: italic;
+    background: #fff;
+    margin-top: 1rem;
+    padding: 0.6rem 2rem;
+}
+
+
+.footer__bottom p {
+    margin: 0 !important;
+    color: var(--secondary-color);
+    font-size: 18px;
+    font-style: italic;
+}
+
+.footer__bottom a {
+    color: var(--secondary-color);
+    font-size: 20px;
+    font-style: italic;
+}
+
+/* Footer Ends */
+
+
+
+
+
+/* Greater Than tablet */
+
+
+@media screen and (min-width : 1000px) {
+    .coursesContainer .courses__card {
+        width: 30%;
+    }
+}
+
+
+/* Responsive Css */
+
+@media screen and (max-width : 950px) {
+    .creative_col {
+        border: none !important;
+    }
+}
+
+
+/* Mobile */
+@media screen and (max-width : 600px) {
+
+    /* creatice section */
+
+    .creative_col {
+        padding: 1rem 2rem;
+    }
+
+    .creative_col h3 {
+        text-align: center;
+    }
+
+    .creative_col p {
+        text-align: center;
+    }
+
+    /* Ubiquity */
+
+    .ubiquityContainer img {
+        width: 80vw;
+    }
+
+
+}
