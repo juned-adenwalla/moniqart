@@ -6,7 +6,7 @@
         <div class="footer__top row px-lg-0 px-sm-2 pt-5">
 
 
-            <div class="footer__list  col-lg-3 col-md-4 col-sm-12 d-flex flex-column align-items-start justify-content-between ">
+            <div class="footer__list  col-lg-3 col-md-4 col-sm-12 d-flex flex-column align-items-start justify-content-evenly ">
                 <a href="#">
                     <img src="<?php echo base_url('uploads/images/' . _siteconfig('_sitelogo')); ?>" alt="">
                 </a>
@@ -81,20 +81,20 @@
             <div class="  col-lg-2 col-md-6 col-sm-12 d-flex flex-column align-items-start justify-content-start">
             </div>
 
-            <div class=" col-lg-3 col-md-6 col-sm-12 d-flex flex-row align-items-center justify-content-between ">
+            <div class=" col-lg-3 col-md-6 col-sm-12 d-flex flex-row align-items-center justify-content-lg-between justify-content-start ">
                 <p>
                     Follow us
                 </p>
-                <a href="#">
+                <a class="m-lg-0 ms-3 " href="#">
                     <i class="fa-brands fa-facebook"></i>
                 </a>
-                <a href="#">
+                <a class="m-lg-0 ms-3 " href="#">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
-                <a href="#">
+                <a class="m-lg-0 ms-3 " href="#">
                     <i class="fa-brands fa-twitter"></i>
                 </a>
-                <a href="#">
+                <a class="m-lg-0 ms-3 " href="#">
                     <i class="fa-brands fa-snapchat"></i>
                 </a>
             </div>

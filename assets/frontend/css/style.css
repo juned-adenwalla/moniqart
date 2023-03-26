@@ -76,6 +76,10 @@ h2.circleAndLine::after {
     background-color: transparent;
 }
 
+.customNavbar {
+    background: transparent;
+}
+
 .navbar-brand img {
     width: 130px;
 }
@@ -193,11 +197,6 @@ h2.circleAndLine::after {
 }
 
 
-.coursesContainer .courses__card:hover .content {
-    margin-top: -50px;
-}
-
-
 .coursesContainer .courses__card img {
     width: 100%;
     height: 100%;
@@ -249,20 +248,6 @@ h2.circleAndLine::after {
     color: var(--light-black);
 }
 
-
-.coursesContainer .paragraphDiv {
-    width: 100%;
-    background: rgba(255, 255, 255, 1);
-    z-index: 100;
-}
-
-.coursesContainer .paragraphDiv p {
-    text-align: center;
-    font-size: 15px;
-    padding: 0.3rem 0.5rem;
-    color: var(--secondary-color) !important;
-}
-
 /* Courses ends */
 
 
@@ -280,7 +265,6 @@ h2.circleAndLine::after {
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    display: none;
 }
 
 .ubiquityContainer img {
@@ -307,9 +291,167 @@ h2.circleAndLine::after {
 /* ubiquity ends */
 
 
- /* Subscription Container */
+/* Studio Background */
 
- .subscriptionContainer {
+.studio_background_div {
+    height: 200px;
+    border-radius: 20px;
+    transition: 0.4s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.studio_background_div span {
+    font-size: 31px;
+    color: #fff;
+    transition: 0.4s;
+    transform: scale(0);
+}
+
+.studio_background_div:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.1)), url("./assets/images/banner/header\ 2.svg");
+}
+
+.studio_background_div:hover span {
+    transform: scale(1);
+}
+
+/* Studio Background ends */
+
+/* make an appoinment */
+
+.makeAnAppinmentSection {
+    background: url("../../../assets/images/banner/bannerbg2.svg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+.makeAnAppinmentSection p {
+    width: 70%;
+    font-weight: 600;
+    text-align: center;
+    font-style: italic;
+    color: #fff;
+}
+
+.makeAnAppinmentSection a {
+    text-transform: uppercase;
+    text-decoration: none;
+    background: #fff;
+    font-weight: 900;
+    color: var(--primary-color);
+    padding: 0.6rem 0.9rem;
+    border-radius: 10px;
+}
+
+/* make an appoinment ends */
+
+
+/* Store Container */
+
+.storeContainer {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.storeContainer .courses__card {
+    height: 300px;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+
+.storeContainer .courses__card .imgDiv {
+    width: 100%;
+    height: 250px;
+    z-index: -100;
+}
+
+.storeContainer .courses__card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.storeContainer .content {
+    width: 100%;
+    height: 50px;
+    transition: 0.3s;
+}
+
+.storeContainer .headingDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.storeContainer .headingDiv span {
+    width: calc(100% - 100px);
+    height: 50px;
+    font-size: 17px;
+    font-weight: 600;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.storeContainer .headingDiv button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+}
+
+.storeContainer .headingDiv button:nth-child(2) {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.storeContainer .headingDiv button i {
+    font-size: 21px;
+    color: var(--light-black);
+}
+
+
+
+.storeContainer .paragraphDiv {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.5);
+    z-index: 100;
+}
+
+.storeContainer .paragraphDiv p {
+    font-size: 15px;
+    padding: 0 0.5rem;
+    text-align: center
+}
+
+/* store container ends */
+
+
+/* Subscription Container */
+
+.subscriptionContainer {
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -339,7 +481,8 @@ h2.circleAndLine::after {
 .subscriptionCard .imgDiv {
     height: 350px;
     border: 1.4px solid rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border-bottom: none;
 }
 
@@ -347,7 +490,7 @@ h2.circleAndLine::after {
     border: none;
     outline: none;
     background: #000;
-    color: #fff ;
+    color: #fff;
     font-size: 18px;
     font-style: italic;
     width: 100%;
@@ -607,6 +750,13 @@ footer {
 
 /* Mobile */
 @media screen and (max-width : 600px) {
+
+
+    /* navbar */
+
+    .customNavbar {
+        background: rgba(0, 0, 0, 0.4);
+    }
 
     /* creatice section */
 

@@ -18,16 +18,16 @@
   </div>
 </div>
 <div class="navbar">
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark p-md-3">
+  <nav class="customNavbar navbar navbar-dark fixed-top navbar-expand-lg p-md-3">
     <div class="container">
       <a class="navbar-brand" href="#"><img src="<?php echo base_url('uploads/images/' . _siteconfig('_sitelogo')); ?>"
           alt=""></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon text-white "></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="collapse navbar-collapse " id="navbarNav">
         <div class="mx-auto"></div>
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -52,20 +52,20 @@
 </div>
 
 <script type="text/javascript">
-    var nav = document.querySelector('nav');
+  var nav = document.querySelector('nav');
 
-    window.addEventListener('scroll', function () {
-        if (window.pageYOffset > 0) {
-            nav.classList.add('bg-dark', 'shadow');
-            document.querySelector('nav').style.marginTop = "-10px";
-            // document.querySelector('nav').style.display = "none";
-        } else {
-            nav.classList.remove('bg-dark', 'shadow');
-            document.querySelector('nav').style.marginTop = "40px";
-            // document.querySelector('nav').style.display = "block";
-        }
-    });
-    function onSelectChange(){
-      document.getElementById('frm').submit();
+  window.addEventListener('scroll', function () {
+    if (window.pageYOffset > 0) {
+      nav.classList.add('bg-dark', 'shadow');
+      document.querySelector('nav').style.marginTop = "-10px";
+      // document.querySelector('nav').style.display = "none";
+    } else {
+      nav.classList.remove('bg-dark', 'shadow');
+      document.querySelector('nav').style.marginTop = "40px";
+      // document.querySelector('nav').style.display = "block";
     }
+  });
+  function onSelectChange() {
+    document.getElementById('frm').submit();
+  }
 </script>
