@@ -8,7 +8,7 @@
 
             <div class="footer__list  col-lg-3 col-md-4 col-sm-12 d-flex flex-column align-items-start justify-content-evenly ">
                 <a href="#">
-                    <img src="<?php echo base_url('uploads/images/' . _siteconfig('_sitelogo')); ?>" alt="">
+                    <img style="width: 150px;" src="<?php echo base_url('uploads/images/' . _siteconfig('_sitelogo')); ?>" alt="">
                 </a>
                 <p class="pt-lg-0 pt-3" >
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. In at officia corporis nesciunt placeat

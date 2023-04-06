@@ -1,9 +1,5 @@
 <?php
 
-
-session_start();
-
-
 require('./includes/_clientfunctions.php');
 
 $userLoggedIn = false;

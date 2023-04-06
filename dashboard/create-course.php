@@ -42,6 +42,7 @@ if (isset($_POST['submit'])) {
     $courselevel = $_POST['courselevel'];
     $startdate = $_POST['startdate'];
     $enddate = $_POST['enddate'];
+    $previewurl = $_POST['previewurl'];
 
     $discountprice = $_POST['discountprice'];
 
@@ -85,7 +86,7 @@ if (isset($_POST['submit'])) {
         $enrollstatus = 'false';
     }
 
-    _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice);
+    _createCourse($coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice);
 }
 
 ?>
@@ -339,6 +340,16 @@ if (isset($_POST['submit'])) {
                                             <input class="form-control" name="coursename" type="text" id="coursename"
                                                 required>
                                             <div class="invalid-feedback">Please type correct course name</div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top: 30px;">
+                                        <div class="col">
+                                            <label htmlFor="previewurl" class="form-label">Course Preview Url</label>
+                                            <input class="form-control" name="previewurl" type="text" id="previewurl"
+                                                required>
+                                            <div class="invalid-feedback">Please type correct url</div>
 
                                         </div>
                                     </div>

@@ -30,6 +30,14 @@ p {
     font-family: var(--secondary-font);
 }
 
+.line-clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: var(--i) ;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
 
 h2.circleAndLine {
     font-size: 29px;
@@ -107,14 +115,13 @@ h3.circleAndLine::after {
     background-color: var(--primary-color) !important;
 }
 
-.navbar {
-    width: 100%;
-    margin-top: 35px;
-    background-color: transparent;
-}
 
 .customNavbar {
-    background: transparent;
+    background: rgba(37, 37, 41,1);
+}
+
+.customNavbar li a {
+    font-size: 14px;
 }
 
 .navbar-brand img {
@@ -126,7 +133,7 @@ h3.circleAndLine::after {
 }
 
 .topBarContainer p {
-    font-size: 15px;
+    font-size: 14px;
     color: white;
 }
 
@@ -159,7 +166,7 @@ h3.circleAndLine::after {
 /* banner */
 
 .banner-image {
-    background-image: url("../../../assets/images/banner/jesus_christ_bg.svg");
+    background-image: var(--img);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -285,13 +292,85 @@ h3.circleAndLine::after {
     color: var(--light-black);
 }
 
+
+/* All courses page */
+
+
+
+.allcoursesContainer .courses__card {
+    height: 530px;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 20px;
+    background: #fff;
+}
+
+
+.allcoursesContainer .courses__card .imgDiv {
+    width: 100%;
+    height: 480px;
+}
+
+
+.allcoursesContainer .courses__card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.allcoursesContainer .content {
+    width: 100%;
+    height: 100px;
+    transition: 0.3s;
+}
+
+.allcoursesContainer .headingDiv {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.allcoursesContainer .headingDiv span {
+    width: calc(100% - 100px);
+    height: 50px;
+    font-size: 17px;
+    font-weight: 600;
+    padding-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+
+.allcoursesContainer .headingDiv button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background-color: #fff;
+}
+
+.allcoursesContainer .headingDiv button:nth-child(2) {
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.allcoursesContainer .headingDiv button i {
+    font-size: 21px;
+    color: var(--light-black);
+}
+
+
+
 /* Courses ends */
 
 
 /* ubiquity */
 
 .ubiquityContainer {
-    width: 100vw;
     margin-top: 4rem;
     margin-bottom: 4rem;
     background: url("../../../assets/images/banner/building_bg.svg");
@@ -305,7 +384,7 @@ h3.circleAndLine::after {
 }
 
 .ubiquityContainer img {
-    width: 60vw;
+    width: 60%;
 }
 
 /* .ubiquityContainer h2 {
@@ -395,7 +474,6 @@ h3.circleAndLine::after {
 /* Store Container */
 
 .storeContainer {
-    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -489,7 +567,6 @@ h3.circleAndLine::after {
 /* Subscription Container */
 
 .subscriptionContainer {
-    width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -605,6 +682,7 @@ h3.circleAndLine::after {
 
 .blog__card .content {
     padding: 0.5rem 0.8rem;
+    height: 120px;
 }
 
 .blog__card .content h2 {
@@ -678,12 +756,12 @@ footer {
 }
 
 .footer__list p {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--secondary-color);
 }
 
 .footer__list span {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--secondary-color);
 }
 
@@ -704,7 +782,7 @@ footer {
 
 .footer__list ul li a {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
     color: var(--secondary-color);
     font-style: italic;
 }
@@ -714,7 +792,7 @@ footer {
     border: none;
     width: 100%;
     background: #3b3b3b;
-    font-size: 15px;
+    font-size: 14px;
     font-style: italic;
     color: var(--secondary-color);
     padding: 1rem 1.4rem;
@@ -857,7 +935,7 @@ footer {
 }
 
 .explore_container h4,
-p {
+.explore_container p {
     color: var(--primary-color);
 }
 
@@ -998,7 +1076,11 @@ p {
 
 @media screen and (min-width : 1000px) {
     .courses__card {
-        width: 30%;
+        width: 23%;
+    }
+
+    .blog__card {
+        width: 23%;
     }
 
     .key_div {
@@ -1033,9 +1115,9 @@ p {
 
     /* navbar */
 
-    .customNavbar {
+    /* .customNavbar {
         background: rgba(0, 0, 0, 0.4);
-    }
+    } */
 
     /* creatice section */
 

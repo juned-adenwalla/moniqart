@@ -18,11 +18,6 @@ require('../includes/_functions.php');
 require('../includes/_config.php');
 
 
-if (isset($_GET['del'])) {
-    $_id = $_GET['id'];
-    _deleteProduct($_id);
-}
-
 
 $record_per_page = 5;
 $page = '';
@@ -40,7 +35,7 @@ $start_from = ($page - 1) * $record_per_page;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Manage Products |
+    <title>Manage Contacts |
         <?php echo _siteconfig('_sitetitle'); ?>
     </title>
     <!-- plugins:css -->
@@ -70,14 +65,13 @@ $start_from = ($page - 1) * $record_per_page;
                     <div class="col-12 grid-margin stretch-card">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="card-title">Manage Products</h4>
+                                <h4 class="card-title">Manage Contact</h4>
                                 <p class="card-description">
                                     Web Help Desk uses tickets to manage service requests. These tickets can be
                                     initiated through email, created in the application, and imported from another
                                     application. Techs, admins, and clients can also manage tickets through email or
                                     through the application in a web browser.
                                 </p>
-
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="table-responsive">
@@ -87,20 +81,15 @@ $start_from = ($page - 1) * $record_per_page;
                                                     <tr>
 
                                                         <th>No</th>
-                                                        <th>Product Name</th>
-                                                        <th>Pic</th>
-                                                        <th>SKU</th>
-                                                        <th>Price</th>
-                                                        <th>Status</th>
+                                                        <th>Name</th>
+                                                        <th>Email Id</th>
                                                         <th>Created at</th>
-                                                        <th>Updated at</th>
-                                                        <th>Action</th>
                                                         <th></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody style="text-align: left;margin-left: 30px">
                                                     <?php
-                                                        _getAllProducts($start_from, $record_per_page);
+                                                    _getAllContact($start_from, $record_per_page);
                                                     ?>
                                                 </tbody>
                                             </table>
@@ -110,7 +99,7 @@ $start_from = ($page - 1) * $record_per_page;
                                 <nav aria-label="Page navigation example" style="margin-top: 30px;">
                                     <ul class="pagination">
                                         <?php
-                                        $query = mysqli_query($conn, "SELECT * FROM `tblproducts`");
+                                        $query = mysqli_query($conn, "SELECT * FROM `tblcontact`");
                                         $total_records = mysqli_num_rows($query);
                                         $total_pages = ceil($total_records / $record_per_page);
                                         $start_loop = $page;
@@ -121,18 +110,18 @@ $start_from = ($page - 1) * $record_per_page;
                                         $end_loop = $start_loop + 3;
                                         if ($page > 1) {
                                             echo "<li class='page-item'>
-                        <a href='manage-products?page=" . ($page - 1) . "' class='page-link'>Previous</a>
+                        <a href='manage-course?page=" . ($page - 1) . "' class='page-link'>Previous</a>
                       </li>";
                                         }
                                         if ($total_records > 5) {
                                             for ($i = 1; $i <= $total_pages; $i++) {
                                                 echo "
-                      <li class='page-item'><a class='page-link' href='manage-products?page=" . $i . "'>$i</a></li>";
+                      <li class='page-item'><a class='page-link' href='manage-course?page=" . $i . "'>$i</a></li>";
                                             }
                                         }
                                         if ($page <= $end_loop) {
                                             echo "<li class='page-item'>
-                        <a class='page-link' href='manage-products?page=" . ($page + 1) . "'>Next</a>
+                        <a class='page-link' href='manage-course?page=" . ($page + 1) . "'>Next</a>
                       </li>";
                                         } ?>
                                     </ul>

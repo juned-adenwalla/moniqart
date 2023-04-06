@@ -48,15 +48,11 @@
                 <img class="w-100"
                     src="https://virtuoso.qodeinteractive.com/wp-content/uploads/2015/10/about-1-img-1.jpg" alt="">
             </div>
-            
+
             <div class="col-lg-8 col-12">
                 <h4 class="fs-3 fw-bold text-dark">FREE YOUR CREATIVE SIDE</h4>
                 <p class=" text-lg-start text-center fw-lighter fs-6" style="color:rgba(0,0,0,0.5)">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-                    laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-                    ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
-                    dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla
-                    facilisis at vero eros et accumsan et.
+                        <?php _getPagesDescription('_aboutuspage'); ?>
                 </p>
             </div>
 
@@ -83,7 +79,7 @@
                 </div>
             </article>
 
-        
+
 
             <article class="col-lg-4 col-md-6 col-6 m-lg-0 mt-3 p-lg-0 pe-2  d-flex flex-lg-row flex-column ">
                 <div class="about_item_left d-lg-block d-flex align-items-center justify-content-center ">
@@ -100,7 +96,7 @@
                 </div>
             </article>
 
-        
+
 
             <article class="col-lg-4 col-md-6 col-6 m-lg-0 mt-3 p-lg-0 pe-2  d-flex flex-lg-row flex-column ">
                 <div class="about_item_left d-lg-block d-flex align-items-center justify-content-center ">
@@ -117,7 +113,7 @@
                 </div>
             </article>
 
-        
+
 
             <article class="col-lg-4 col-md-6 col-6 m-lg-0 mt-3 p-lg-0 pe-2  d-flex flex-lg-row flex-column ">
                 <div class="about_item_left d-lg-block d-flex align-items-center justify-content-center ">
@@ -134,7 +130,7 @@
                 </div>
             </article>
 
-        
+
 
             <article class="col-lg-4 col-md-6 col-6 m-lg-0 mt-3 p-lg-0 pe-2  d-flex flex-lg-row flex-column ">
                 <div class="about_item_left d-lg-block d-flex align-items-center justify-content-center ">
@@ -151,7 +147,7 @@
                 </div>
             </article>
 
-        
+
 
             <article class="col-lg-4 col-md-6 col-6 m-lg-0 mt-3 p-lg-0 pe-2  d-flex flex-lg-row flex-column ">
                 <div class="about_item_left d-lg-block d-flex align-items-center justify-content-center ">
@@ -168,7 +164,7 @@
                 </div>
             </article>
 
-        
+
 
         </div>
     </section>
@@ -267,6 +263,20 @@
             </div>
 
         </div>
+
+    </section>
+
+    <section class="faqs_container container my-5">
+
+        <h3 class="px-lg-5 px-2 display-6">FAQ'S</h3>
+
+
+        <div class="accordion px-lg-5 px-2" id="accordionExample">
+
+            <?php _getFaqsForAboutPage(); ?>
+        
+        </div>
+
 
     </section>
 

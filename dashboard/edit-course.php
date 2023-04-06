@@ -34,6 +34,20 @@ if (isset($_SESSION['slide_update_error']) || !isset($_SESSION['slide_update_err
     $_SESSION['slide_update_error'] = false;
 }
 
+if (isset($_SESSION['course_product_success']) || !isset($_SESSION['course_product_success'])) {
+    $_SESSION['course_product_success'] = false;
+}
+if (isset($_SESSION['course_product_error']) || !isset($_SESSION['course_product_error'])) {
+    $_SESSION['course_product_error'] = false;
+}
+
+if (isset($_SESSION['course_product_update_success']) || !isset($_SESSION['course_product_update_success'])) {
+    $_SESSION['course_product_update_success'] = false;
+}
+if (isset($_SESSION['course_product_update_error']) || !isset($_SESSION['course_product_update_error'])) {
+    $_SESSION['course_product_update_error'] = false;
+}
+
 
 $id = $_GET['id'];
 
@@ -60,6 +74,7 @@ if (isset($_POST['submit'])) {
     $courselevel = $_POST['courselevel'];
     $startdate = $_POST['startdate'];
     $enddate = $_POST['enddate'];
+    $previewurl = $_POST['previewurl'];
 
     $discountprice = $_POST['discountprice'];
 
@@ -104,7 +119,7 @@ if (isset($_POST['submit'])) {
         $enrollstatus = false;
     }
 
-    _updateCourse($id, $coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice);
+    _updateCourse($id, $coursename, $previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice);
 }
 
 $record_per_page = 5;
@@ -116,7 +131,7 @@ if (isset($_GET["page"])) {
 }
 $start_from = ($page - 1) * $record_per_page;
 
-
+// Slide
 if (isset($_POST['addSlide'])) {
 
     $caption = $_POST['caption'];
@@ -133,7 +148,6 @@ if (isset($_POST['addSlide'])) {
             move_uploaded_file($_FILES["banner"]["tmp_name"], "../uploads/banner/" . $_slideurl);
         }
     }
-
 
     _createSlide($id, $_slideurl, $caption);
 
@@ -173,6 +187,68 @@ if (isset($_POST['editSlide'])) {
     _updateSlide($slideid, $courseid, $_slideurl, $caption);
 
 }
+
+
+
+// Product
+
+if (isset($_POST['addProduct'])) {
+
+    $productname = $_POST['productname'];
+    $productprice = $_POST['productprice'];
+    $productdesc = $_POST['productdesc'];
+
+    if ($_FILES["banner"]["name"] != '') {
+        $banner = $_FILES["banner"]["name"];
+        $extension = substr($banner, strlen($banner) - 4, strlen($banner));
+        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
+        // Validation for allowed extensions .in_array() function searches an array for a specific value.
+        if (!in_array($extension, $allowed_extensions)) {
+            echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
+        } else {
+            $img = md5($banner) . $extension;
+            move_uploaded_file($_FILES["banner"]["tmp_name"], "../uploads/courseproducts/" . $img);
+        }
+    }
+
+    _addCourseProduct($id, $productname, $productdesc, $productprice, $img);
+}
+
+if (isset($_GET['deleteProduct'])) {
+
+    $_courseid = $_GET['id'];
+    $productId = $_GET['productid'];
+
+    _deleteCourseProduct($productId, $_courseid);
+}
+
+if (isset($_POST['editProduct'])) {
+
+
+    $productId = $_POST['productId'];
+    $productname = $_POST['productname'];
+    $productprice = $_POST['productprice'];
+    $productdesc = $_POST['productdesc'];
+
+    if ($_FILES["banner"]["name"] != '') {
+        $banner = $_FILES["banner"]["name"];
+        $extension = substr($banner, strlen($banner) - 4, strlen($banner));
+        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
+        // Validation for allowed extensions .in_array() function searches an array for a specific value.
+        if (!in_array($extension, $allowed_extensions)) {
+            echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
+        } else {
+            $img = md5($banner) . $extension;
+            move_uploaded_file($_FILES["banner"]["tmp_name"], "../uploads/courseproducts/" . $img);
+        }
+    } else {
+        $img = _getSingleCourseProduct($productId, '_img');
+    }
+
+    _updateCourseProduct($productId, $id, $productname, $productdesc, $productprice, $img);
+}
+
+
 
 ?>
 <!DOCTYPE html>
@@ -280,6 +356,51 @@ if (isset($_POST['editSlide'])) {
                         <?php
 
                     }
+
+                    // Course Product
+                    
+                    if ($_SESSION['course_product_success']) {
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Product Added!</strong> New Product Added successfully.
+                            </div>
+                        </div>
+                        <?php
+                    }
+
+                    if ($_SESSION['course_product_error']) {
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Product Creation Failed</strong>
+                            </div>
+                        </div>
+                        <?php
+
+                    }
+
+                    if ($_SESSION['course_product_update_success']) {
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Product Updated!</strong> Product Updated successfully.
+                            </div>
+                        </div>
+                        <?php
+                    }
+
+                    if ($_SESSION['course_product_update_error']) {
+                        ?>
+                        <div id="liveAlertPlaceholder">
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <strong>Product Updation Failed</strong>
+                            </div>
+                        </div>
+                        <?php
+
+                    }
+
 
                     ?>
                     <div class="col-12 grid-margin stretch-card">
@@ -467,13 +588,13 @@ if (isset($_POST['editSlide'])) {
                                         <div class="col-lg-6">
                                             <label for="startdate" class="form-label">Start Date</label>
                                             <input type="date" class="form-control" name="startdate" id="startdate"
-                                                value="<?php echo _getSingleCourse($id, '_startdate') ?>" required>
+                                                value="<?php echo _getSingleCourse($id, '_startdate') ?>">
                                             <div class="invalid-feedback">Please type correct date</div>
                                         </div>
                                         <div class="col-lg-6">
                                             <label for="enddate" class="form-label">End Date</label>
                                             <input type="date" class="form-control" name="enddate" id="enddate"
-                                                value="<?php echo _getSingleCourse($id, '_enddate') ?>" required>
+                                                value="<?php echo _getSingleCourse($id, '_enddate') ?>">
                                             <div class="invalid-feedback">Please type correct date</div>
                                         </div>
                                     </div>
@@ -587,6 +708,16 @@ if (isset($_POST['editSlide'])) {
 
                                     <div class="row" style="margin-top: 30px;">
                                         <div class="col">
+                                            <label htmlFor="previewurl" class="form-label">Course Preview Url</label>
+                                            <input class="form-control" name="previewurl" type="text" id="previewurl"
+                                                value="<?php echo _getSingleCourse($id, '_previewurl') ?>" required>
+                                            <div class="invalid-feedback">Please type correct url</div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-top: 30px;">
+                                        <div class="col">
                                             <label for="courseDesc" class="form-label">Course Description</label>
                                             <textarea name="courseDesc" id="mytextarea" style="width:100%"
                                                 rows="10"><?php echo _getSingleCourse($id, '_coursedescription') ?></textarea>
@@ -623,19 +754,98 @@ if (isset($_POST['editSlide'])) {
                                         <button type="button"
                                             class="btn btn-primary btn-sm font-weight-medium auth-form-btn"
                                             style="height:40px; float:right; " data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal">
+                                            data-bs-target="#productModal">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="white" style="width: 15px;"
                                                 viewBox="0 0 448 512">
                                                 <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
                                                 <path
                                                     d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                                            </svg>&nbsp;&nbsp;Add Slides
+                                            </svg>&nbsp;&nbsp;Add Product
                                         </button>
                                     </div>
 
                                 </form>
                             </div>
 
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-12 grid-margin stretch-card">
+
+                        <div class="card">
+                            <div class="card-body" style="margin-top: 30px ;">
+                                <h4 class="card-title">Manage Products </h4>
+                                <p class="card-description">
+                                    From here, you'll see a list of all the categories on your site. You can edit or
+                                    delete them from here. You can also change the order of your categories by dragging
+                                    and dropping them into the order you
+                                </p>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="table-responsive">
+                                            <table id="example" class="display expandable-table" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Id</th>
+                                                        <th>Product Name</th>
+                                                        <th>Price</th>
+                                                        <th>Product Pic</th>
+                                                        <th>Created</th>
+                                                        <th>Updated at</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody style="text-align: left;margin-left: 30px">
+                                                    <?php
+                                                    _getCourseProducts($id, $start_from, $record_per_page);
+                                                    ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <nav aria-label="Page navigation example" style="margin-top: 10px;">
+                                    <ul class="pagination">
+                                        <?php
+                                        $query = mysqli_query($conn, "SELECT * FROM `tblcourseproducts`");
+                                        $total_records = mysqli_num_rows($query);
+                                        $total_pages = ceil($total_records / $record_per_page);
+                                        $start_loop = $page;
+                                        $difference = $total_pages - $page;
+                                        if ($difference <= 4) {
+                                            $start_loop = $total_pages - 4;
+                                        }
+                                        $end_loop = $start_loop + 3;
+                                        if ($page > 1) {
+                                            echo "<li class='page-item'>
+                        <a href='edit-course?id=$id&page=" . ($page - 1) . "' class='page-link'>Previous</a>
+                      </li>";
+                                        }
+                                        if ($total_records > 5) {
+
+                                            for ($i = 1; $i <= $total_pages; $i++) {
+                                                echo "
+                      <li class='page-item'><a class='page-link' href='edit-course?id=$id&page=" . $i . "'>$i</a></li>";
+                                            }
+                                        }
+                                        if ($page <= $end_loop) {
+                                            echo "<li class='page-item'>
+                        <a class='page-link' href='edit-course?id=$id&page=" . ($page + 1) . "'>Next</a>
+                      </li>";
+                                        } ?>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 grid-margin stretch-card">
+
+                        <!-- <div class="card">
                             <div class="card-body" style="margin-top: 30px ;">
                                 <h4 class="card-title">Manage Slide </h4>
                                 <p class="card-description">
@@ -699,9 +909,10 @@ if (isset($_POST['editSlide'])) {
                                 </nav>
                             </div>
 
+                        </div> -->
 
-                        </div>
                     </div>
+
                     <!-- content-wrapper ends -->
                     <!-- partial:partials/_footer.html -->
                     <?php include('templates/_footer.php'); ?>
@@ -749,7 +960,6 @@ if (isset($_POST['editSlide'])) {
                             </div>
 
 
-
                         </div>
                         <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -771,6 +981,76 @@ if (isset($_POST['editSlide'])) {
         </div>
 
 
+
+        <!-- Product Modal -->
+        <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form action="" method="post" enctype="multipart/form-data">
+                    <div class="modal-content" style="padding: 10px;">
+                        <div class="modal-header" style="padding: 0px;margin-bottom: 20px;padding-bottom:10px">
+                            <h4 class="modal-title fs-5" id="productModalLabel">Add Product</h4>
+                            <button type="button" class="btn-close" style="border: none;;background-color:white"
+                                data-bs-dismiss="modal" aria-label="Close"><svg style="width: 15px;"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+                                    <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
+                                    <path
+                                        d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z" />
+                                </svg></button>
+                        </div>
+                        <div class="modal-body" style="padding: 0px;">
+
+
+
+                            <div class="row">
+                                <div class="col">
+                                    <label for="productname" class="form-label">Product Name</label>
+                                    <input class="form-control" name="productname" type="text" id="productname"
+                                        required>
+                                    <div class="invalid-feedback">Please type caption</div>
+                                </div>
+                                <div class="col">
+                                    <label for="productprice" class="form-label">Product Price</label>
+                                    <input class="form-control" name="productprice" type="text" id="productprice"
+                                        required>
+                                    <div class="invalid-feedback">Please type caption</div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col">
+                                    <label for="productdesc" class="form-label">Product Description</label>
+                                    <input class="form-control" name="productdesc" type="text" id="productdesc"
+                                        required>
+                                    <div class="invalid-feedback">Please type caption</div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col-lg-12">
+                                    <label for="banner" class="form-label">Product Image</label>
+                                    <input type="file" name="banner" class="form-control">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer" style="padding: 0px;margin-top: 20px;padding-top:10px">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" name="addProduct" class="btn btn-primary"><i
+                                    class="mdi mdi-content-save"></i>&nbsp;&nbsp;Save changes</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="editCourseProduct" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" id="editCourseProductBody">
+
+            </div>
+        </div>
 
         <script>
             const getSubCategory = (val) => {
@@ -798,6 +1078,25 @@ if (isset($_POST['editSlide'])) {
                     success: function (data) {
                         $(`#editBannerBody`).html(data);
                         $(`#editBanner`).modal("show");
+                    }
+                });
+
+            }
+
+            const callEditProduct = (courseid, productid) => {
+
+
+                $.ajax({
+                    type: "POST",
+                    url: `edit-courseproduct.php`,
+                    data: {
+                        "edit": true,
+                        "courseid": courseid,
+                        "productid": productid,
+                    },
+                    success: function (data) {
+                        $(`#editCourseProductBody`).html(data);
+                        $(`#editCourseProduct`).modal("show");
                     }
                 });
 

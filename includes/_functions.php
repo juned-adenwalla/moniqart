@@ -346,6 +346,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_sitetitle` varchar(50) NULL,
                 `_siteemail` varchar(50) NULL,
                 `_sitephone` varchar(50) NULL,
+                `_sitecurrency` varchar(50) NULL,
                 `_timezone` varchar(50) NULL,
                 `_customheader` text NULL,
                 `_customfooter` text NULL,
@@ -393,11 +394,11 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
 
             $contact_table = "CREATE TABLE IF NOT EXISTS `tblcontact` (
                 `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
-                `FullName` varchar(50) NOT NULL,
-                `EmailId` varchar(100) NOT NULL,
-                `PhoneNo` varchar(20) NOT NULL,
-                `Message` text NULL DEFAULT current_timestamp()
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+                `_name` varchar(255) NOT NULL,
+                `_email` varchar(255) NOT NULL,
+                `_message` text NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
             $category_table = "CREATE TABLE IF NOT EXISTS `tblcategory` (
                 `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -543,7 +544,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_enrollstatus` varchar(50) NOT NULL,
                 `_thumbnail` varchar(200) NOT NULL,
                 `_banner` varchar(200) NOT NULL,
-                `_pricing` varchar(100) NOT NULL,
+                `_pricing` int(100) NOT NULL,
                 `_status` varchar(50) NOT NULL,
                 `_teacheremailid` varchar(50) NOT NULL,
                 `_categoryid` varchar(50) NOT NULL,
@@ -554,6 +555,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_evuluationlink` text NOT NULL,
                 `_startdate` varchar(255)  NOT NULL,
                 `_enddate` varchar(255)  NOT NULL,
+                `_previewurl` varchar(255)  NOT NULL,
                 `_discountprice` varchar(50)  NOT NULL,
                 `Creation_at_Date` date NOT NULL DEFAULT current_timestamp(),
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -582,6 +584,17 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_courseid` varchar(55) NOT NULL,
                 `_slideurl` varchar(55) NOT NULL,
                 `_caption` varchar(55) NOT NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+          
+            $courseproductsDB = "CREATE TABLE IF NOT EXISTS `tblcourseproducts` (
+                `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_courseid` varchar(255) NOT NULL,
+                `_name` varchar(255) NOT NULL,
+                `_desc` text NOT NULL,
+                `_price` varchar(255) NOT NULL,
+                `_img` varchar(255) NOT NULL,
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
@@ -625,6 +638,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
             $productDB = "CREATE TABLE IF NOT EXISTS `tblproducts` (
                 `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
                 `_name` varchar(55) NOT NULL,
+                `_img` text NOT NULL,
                 `_slug` varchar(55) NULL,
                 `_sku` varchar(100) NOT NULL,
                 `_price` varchar(100) NOT NULL,
@@ -721,7 +735,17 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
             )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 
-            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $invoice, $invoiceitems, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB, $mycourseDB, $pendingCetificatedDB];
+            $homepagesettingsDB = "CREATE TABLE IF NOT EXISTS `tblhomepagesettings` (
+                `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_bannertitle` varchar(255) NOT NULL,
+                `_bannerimg` varchar(255) NULL,
+                `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                `UpdationDate` datetime NULL ON UPDATE current_timestamp()
+            )  ENGINE=InnoDB DEFAULT CHARSET=utf8;";
+
+
+
+            $tables = [$admin_table, $sms_config, $email_config, $site_config, $payment_config, $tickets_table, $ticket_comment, $contact_table, $category_table, $subcategory_table, $blog_table, $currency_table, $tax_table, $payment_trans, $coupon_table, $coupon_trans, $membership_table, $templates, $course, $lessondb, $slidesdb, $attachmentsDB, $pageSettings, $faqs, $menuSettings, $socialMediaDB, $productDB, $galleryDB, $reviewDB, $countryDB, $stateDB, $shippingDB, $ordersDB, $mycourseDB, $pendingCetificatedDB, $homepagesettingsDB , $courseproductsDB];
 
             foreach ($tables as $k => $sql) {
                 $query = @$temp_conn->query($sql);
@@ -748,7 +772,9 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
 
                 $pageSettingsData = "INSERT INTO `tblpagesettings`(`_aboutuspage`, `_contactuspage`, `_privacypolicypage`, `_termsandconditionpage`) VALUES ('About us Page','Contact Us Page','Privacy Policy Page','Terms and Conditions Page')";
 
-                $data = [$admin_data, $sms_data, $email_data, $site_data, $payment_data, $template_data, $pageSettingsData];
+                $homePageSettingsData = "INSERT INTO `tblhomepagesettings`(`_bannertitle`, `_bannerimg`) VALUES ('Banner Title','Banner Image')";
+
+                $data = [$admin_data, $sms_data, $email_data, $site_data, $payment_data, $template_data, $pageSettingsData,$homePageSettingsData];
 
                 foreach ($data as $k => $sql) {
                     $query = @$temp_conn->query($sql);
@@ -1487,33 +1513,33 @@ function _siteconfig($param)
     }
 }
 
-function _savesiteconfig($sitetitle, $siteemail, $timezone, $header, $footer, $css, $logo = '', $reslogo = '', $favicon = '')
+function _savesiteconfig($sitetitle, $siteemail,$sitephone,$sitecurrency, $timezone, $header, $footer, $css, $logo = '', $reslogo = '', $favicon = '')
 {
     require('_config.php');
     require('_alert.php');
     if ($logo && $reslogo && $favicon) {
-        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitelogo`='$logo',`_sitereslogo`='$reslogo',`_favicon`='$favicon' WHERE `_id` = 1";
+        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_sitephone`='$sitephone',`_sitecurrency`='$sitecurrency',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitelogo`='$logo',`_sitereslogo`='$reslogo',`_favicon`='$favicon' WHERE `_id` = 00000000000000000001";
     }
     if ($logo && $reslogo) {
-        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_timezone`='$timezone',`_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitelogo`='$logo',`_sitereslogo`='$reslogo' WHERE `_id` = 1";
+        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_sitephone`='$sitephone',`_sitecurrency`='$sitecurrency',`_timezone`='$timezone',`_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitelogo`='$logo',`_sitereslogo`='$reslogo' WHERE `_id` = 00000000000000000001";
     }
     if ($reslogo && $favicon) {
-        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_timezone`='$timezone',`_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitereslogo`='$reslogo',`_favicon`='$favicon' WHERE `_id` = 1";
+        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_sitephone`='$sitephone',`_sitecurrency`='$sitecurrency',`_timezone`='$timezone',`_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitereslogo`='$reslogo',`_favicon`='$favicon' WHERE `_id` = 00000000000000000001";
     }
     if ($logo && $favicon) {
-        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_timezone`='$timezone',`_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitelogo`='$logo',`_favicon`='$favicon' WHERE `_id` = 1";
+        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_sitephone`='$sitephone',`_sitecurrency`='$sitecurrency',`_timezone`='$timezone',`_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitelogo`='$logo',`_favicon`='$favicon' WHERE `_id` = 00000000000000000001";
     }
     if ($logo) {
-        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitelogo`='$logo' WHERE `_id` = 1";
+        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_sitephone`='$sitephone',`_sitecurrency`='$sitecurrency',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitelogo`='$logo' WHERE `_id` = 00000000000000000001";
     }
     if ($reslogo) {
-        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitereslogo`='$reslogo' WHERE `_id` = 1";
+        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_sitephone`='$sitephone',`_sitecurrency`='$sitecurrency',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_sitereslogo`='$reslogo' WHERE `_id` = 00000000000000000001";
     }
     if ($favicon) {
-        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_favicon`='$favicon' WHERE `_id` = 1";
+        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_sitephone`='$sitephone',`_sitecurrency`='$sitecurrency',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css', `_favicon`='$favicon' WHERE `_id` = 00000000000000000001";
     }
     if (!$logo && !$reslogo && !$favicon) {
-        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css'  WHERE `_id` = 1";
+        $sql = "UPDATE `tblsiteconfig` SET `_sitetitle`='$sitetitle',`_siteemail`='$siteemail',`_sitephone`='$sitephone',`_sitecurrency`='$sitecurrency',`_timezone`='$timezone', `_customheader`='$header', `_customfooter`='$footer',  `_customcss`='$css'  WHERE `_id` = 00000000000000000001";
     }
     $query = mysqli_query($conn, $sql);
     if ($query) {
@@ -2199,6 +2225,38 @@ function _showSubCategoryOptions($_subcategoryID = '')
     }
 }
 
+// Home Page Settings Function
+
+function _updateHomePageSettings($title, $img)
+{
+    require('_config.php');
+
+    $stmt = $conn->prepare("UPDATE `tblhomepagesettings` SET `_bannertitle`= ? , `_bannerimg`= ?  WHERE `_id`='00000000000000000001' ");
+
+    $stmt->bind_param("ss", $title, $img);
+    $stmt->execute();
+
+    if ($stmt) {
+        $_SESSION['blog_success'] = true;
+        header("location:");
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+
+function _getHomePage($id, $param)
+{
+    require('_config.php');
+    $sql = "SELECT * FROM `tblhomepagesettings` WHERE `_id`=$id";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
 
 // All Blog Function 
 
@@ -2316,9 +2374,6 @@ function updateBlog($_blogtitle, $_blogdesc, $_blogcategory, $_blogsubcategory, 
     require('_config.php');
 
     $bloglink = strtolower(str_replace(' ', '-', $_blogtitle));
-
-    $sql = "UPDATE `tblblog` SET `_blogtitle`='$_blogtitle', `_parmalink`='$bloglink', `_blogdesc`='$_blogdesc'  , `_blogcategory`='$_blogcategory'  , `_blogsubcategory`='$_blogsubcategory' , `_blogmetadesc`='$_blogmetadesc' , `_blogimg`='$_blogimg' , `_status`='$_status' WHERE `_id` = $_id";
-
 
     $stmt = $conn->prepare("UPDATE `tblblog` SET `_blogtitle`= ? , `_parmalink`= ? , `_blogdesc`= ? , `_blogcategory`= ? , `_blogsubcategory`= ? , `_blogmetadesc`= ? , `_blogimg`= ? , `_status`= ? WHERE `_id`=? ");
 
@@ -3629,7 +3684,7 @@ function _viewTranscation($useremail, $startfrom = '', $limit = '')
 
 // Course //
 
-function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice)
+function _createCourse($coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice)
 {
 
     require('_config.php');
@@ -3637,9 +3692,9 @@ function _createCourse($coursename, $courseDesc, $whatlearn, $requirements, $eli
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
 
 
-    $stmt = $conn->prepare("INSERT INTO `tblcourse` (`_coursename`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES (?, ?, ?, ?, ?, ?, ?, ? , ? , ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO `tblcourse` (`_coursename`,`_previewurl`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES (?, ?,?, ?, ?, ?, ?, ?, ? , ? , ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)");
     // echo $stmt;
-    $stmt->bind_param("ssssssssssssssssssssss", $coursename, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice);
+    $stmt->bind_param("sssssssssssssssssssssss", $coursename, $previewurl, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice);
 
     if ($stmt->execute()) {
         $_SESSION['course_success'] = true;
@@ -3824,15 +3879,15 @@ function _showCourses($_courseid = '')
 }
 
 
-function _updateCourse($_id, $coursename, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice)
+function _updateCourse($_id, $coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice)
 {
 
     require('_config.php');
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
 
-    $stmt = $conn->prepare("UPDATE `tblcourse` SET `_coursename`=?, `_parmalink`=? ,`_coursedescription`=?  , `_whatlearn`=? ,`_requirements`=?  ,`_eligibilitycriteria`=? ,`_capacity`=?  , `_enrollstatus`=? ,`_thumbnail`=?  ,`_banner`=?  , `_pricing`=? ,`_status`=?  ,`_teacheremailid`=?  , `_categoryid`=? ,`_subcategoryid`=?  , `_coursetype`=?  , `_coursechannel`=?  , `_courselevel`=?  , `_evuluationlink`=?  , `_startdate`=?  , `_enddate`=?  , `_discountprice`=?  WHERE `_id`=?  ");
+    $stmt = $conn->prepare("UPDATE `d` SET `_coursename`=?,`_previewurl`=?, `_parmalink`=? ,`_coursedescription`=?  , `_whatlearn`=? ,`_requirements`=?  ,`_eligibilitycriteria`=? ,`_capacity`=?  , `_enrollstatus`=? ,`_thumbnail`=?  ,`_banner`=?  , `_pricing`=? ,`_status`=?  ,`_teacheremailid`=?  , `_categoryid`=? ,`_subcategoryid`=?  , `_coursetype`=?  , `_coursechannel`=?  , `_courselevel`=?  , `_evuluationlink`=?  , `_startdate`=?  , `_enddate`=?  , `_discountprice`=?  WHERE `_id`=?  ");
 
-    $stmt->bind_param("sssssssssssssssssssssss", $coursename, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice, $_id);
+    $stmt->bind_param("ssssssssssssssssssssssss", $coursename,$previewurl, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice, $_id);
     $stmt->execute();
 
     if ($stmt) {
@@ -3852,7 +3907,7 @@ function _deleteCourse($id)
     require('_config.php');
     require('_alert.php');
 
-    $sql = "DELETE FROM `tblcourse` WHERE `_id`='$id' ";
+    $sql = "DELETE FROM `d` WHERE `_id`='$id' ";
     $query = mysqli_query($conn, $sql);
 
     if ($query) {
@@ -3931,6 +3986,135 @@ function _allcourses()
     }
 }
 
+
+// Courses Products
+
+// _courseid
+// _name
+// _desc
+// _price
+// _img
+
+function _addCourseProduct($_courseid, $_name, $_desc, $_price, $_img)
+{
+
+
+    require('_config.php');
+
+    $stmt = $conn->prepare("INSERT INTO `tblcourseproducts` (`_courseid`,`_name`,`_desc`,`_price`,`_img`) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $_courseid, $_name, $_desc, $_price, $_img);
+
+    $stmt->execute();
+
+    if ($stmt) {
+        $_SESSION['course_product_success'] = true;
+        header("location:");
+    } else {
+        $_SESSION['course_product_error'] = false;
+        header("location:");
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+
+function _getSingleCourseProduct($id, $param)
+{
+
+    require('_config.php');
+    $sql = "SELECT * FROM `tblcourseproducts` WHERE `_id`='$id' ";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+
+
+function _getCourseProducts($id, $startfrom = '', $limit = '')
+{
+
+    require('_config.php');
+
+
+    $sql = "SELECT * FROM `tblcourseproducts` where `_courseid`='$id' ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
+            ?>
+            <tr>
+                <td><?php echo $data['_id']; ?></td>
+
+                <td> <?php echo $data['_name']; ?> </td>
+
+                <td> <?php echo $data['_price']; ?> </td>
+
+                <td>
+                    <a href="../uploads/courseproducts/<?php echo $data['_img']; ?>" target="_blank" class="mdi mdi-eye"></a>
+                </td>
+                <td>
+                    <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                </td>
+                <td>
+                    <?php
+                    if (strtotime($data['UpdationDate']) == '') {
+                        echo "Not Updated Yet";
+                    } else {
+                        echo date("M j, Y", strtotime($data['UpdationDate']));
+                    }
+                    ?>
+                </td>
+                <td>
+                    <span style="font-size: 20px;cursor:pointer;color:green" class="mdi mdi-pencil-box"
+                        onclick="callEditProduct(<?php echo $data['_courseid']; ?>,<?php echo $data['_id']; ?>)"></span>
+
+                    <a href='edit-course?id=<?php echo $data['_courseid']; ?>&productid=<?php echo $data['_id']; ?>&deleteProduct=true'
+                        class="mdi mdi-delete-forever" style="font-size: 20px;cursor:pointer; color:red"><a>
+                </td>
+            </tr>
+            <?php
+        }
+    }
+}
+
+
+function _updateCourseProduct($_id, $_courseid, $_name, $_desc, $_price, $_img)
+{
+
+    require('_config.php');
+
+    $sql = "UPDATE `tblcourseproducts` SET `_name`='$_name' ,`_desc`='$_desc',`_price`='$_price',`_img`='$_img'   WHERE `_id` = '$_id' AND `_courseid`='$_courseid' ";
+    $query = mysqli_query($conn, $sql);
+
+
+    if ($query) {
+        $_SESSION['course_product_update_success'] = true;
+        header("location:");
+    } else {
+        $_SESSION['course_product_update_error'] = false;
+        header("location:");
+    }
+}
+
+
+
+function _deleteCourseProduct($id, $_courseid)
+{
+    require('_config.php');
+
+
+    $sql = "DELETE FROM `tblcourseproducts` WHERE `_id`='$id' AND `_courseid`='$_courseid' ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        $_SESSION['course_success'] = true;
+        header("location:edit-course?id=$_courseid");
+    }
+}
 
 
 
@@ -4956,13 +5140,13 @@ function _getSocialMedia($startfrom = '', $limit = '')
 
 // Products
 
-function _createProduct($name, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId)
+function _createProduct($name,$img, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId)
 {
 
     require('_config.php');
 
-    $stmt = $conn->prepare("INSERT INTO `tblproducts` (`_name`, `_sku`, `_price`, `_discountprice`, `_desc`, `_status`, `_productcategory`, `_productsubcategory`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssss", $name, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId);
+    $stmt = $conn->prepare("INSERT INTO `tblproducts` (`_name`,`_img`, `_sku`, `_price`, `_discountprice`, `_desc`, `_status`, `_productcategory`, `_productsubcategory`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssssss", $name,$img, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId);
 
     $stmt->execute();
 
@@ -5015,14 +5199,14 @@ function _deleteProduct($id)
     }
 }
 
-function _updateProduct($id, $name, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId)
+function _updateProduct($id, $name,$img, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId)
 {
     require('_config.php');
 
 
-    $stmt = $conn->prepare("UPDATE `tblproducts` SET `_name`= ? , `_sku`= ? , `_price`= ? , `_discountprice`= ? , `_desc`= ? , `_status`= ? , `_productcategory`= ? , `_productsubcategory`= ? WHERE `_id`=? ");
+    $stmt = $conn->prepare("UPDATE `tblproducts` SET `_name`= ? ,`_img`= ? , `_sku`= ? , `_price`= ? , `_discountprice`= ? , `_desc`= ? , `_status`= ? , `_productcategory`= ? , `_productsubcategory`= ? WHERE `_id`=? ");
 
-    $stmt->bind_param("sssssssss", $name, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId, $id);
+    $stmt->bind_param("ssssssssss", $name,$img, $sku, $price, $discountPrice, $desc, $status, $categoryId, $subcategoryId, $id);
     $stmt->execute();
 
     if ($stmt) {
@@ -5057,6 +5241,11 @@ function _getAllProducts($startfrom = '', $limit = '')
 
 
                 <td><?php echo $data['_name']; ?></td>
+                <td>
+                    <a href="../uploads/productsPics/<?php echo $data['_img']; ?>" target="_blank"  class="mdi mdi-eye" >
+                        
+                    </a>
+                </td>
                 <td><?php echo $data['_sku']; ?></td>
                 <td><?php echo $data['_price']; ?></td>
 
@@ -5891,5 +6080,59 @@ function _getCertificates($status = '', $startfrom = '', $limit = '')
         }
     }
 }
+
+
+// Manage Contact
+
+
+function _getAllContact($startfrom = '', $limit = '')
+{
+
+    require('_config.php');
+
+    $sql = "SELECT * FROM `tblcontact` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+        foreach ($query as $data) {
+
+
+            ?>
+             <tr>
+                <td><?php echo $data['_id']; ?></td>
+
+
+                <td><?php echo $data['_name']; ?></td>
+                <td><?php echo $data['_email']; ?></td>
+                </td>
+
+
+                <td>
+                    <?php echo date("M j, Y", strtotime($data['CreationDate'])); ?>
+                </td>
+                <td>
+                    <a href='view-contact?id=<?php echo $data['_id']; ?>' class="mdi mdi-eye"><a>
+                </td>
+            </tr>
+            <?php
+        }
+    }
+}
+
+
+function _getSingleContact($id, $param)
+{
+    require('_config.php');
+
+    $sql = "SELECT  * FROM `tblcontact` where `_id`='$id' ";
+
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
 
 ?>

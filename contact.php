@@ -1,3 +1,16 @@
+<?php
+
+if (isset($_POST['submit'])) {
+
+    $username = $_POST['username'];
+    $useremail = $_POST['useremail'];
+    $usermessage = $_POST['usermessage'];
+    _addContactToDb($username, $useremail, $usermessage);
+
+
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -38,8 +51,7 @@
 <body>
 
     <?php include('templates/_header.php'); ?>
-
-
+ 
 
     <section class="contact__container container my-5">
 
@@ -52,11 +64,14 @@
                     laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam.
                 </p>
 
-                <form action="" class="d-flex flex-column justify-content-start align-items-start">
-                    <input type="text" style="border:1px solid rgba(0,0,0,0.1); " class="w-100 py-3 px-4 my-3  " placeholder="Name*">
-                    <input type="text" style="border:1px solid rgba(0,0,0,0.1); " class="w-100 py-3 px-4 my-3  " placeholder="Email Address*">
-                    <textarea name="" style="border:1px solid rgba(0,0,0,0.1); " class="w-100 py-3 px-4 my-3  " id="" rows="5" placeholder="Comment*"></textarea>
-                    <button class="btn px-5 py-3">
+                <form action="#" method="post" class="d-flex flex-column justify-content-start align-items-start">
+                    <input type="text" style="border:1px solid rgba(0,0,0,0.1); " class="w-100 py-3 px-4 my-3  "
+                        name="username" placeholder="Name*">
+                    <input type="text" style="border:1px solid rgba(0,0,0,0.1); " class="w-100 py-3 px-4 my-3  "
+                        name="useremail" placeholder="Email Address*">
+                    <textarea style="border:1px solid rgba(0,0,0,0.1); " class="w-100 py-3 px-4 my-3  " id="" rows="5"
+                        name="usermessage" placeholder="Comment*"></textarea>
+                    <button type="submit" name="submit" class="btn px-5 py-3">
                         Submit
                     </button>
                 </form>
@@ -65,7 +80,7 @@
 
             <div class="col-lg-4 col-12  border py-4 px-lg-5  px-3 m-lg-0 mt-3 ">
                 <ul class="list-unstyled m-0 my-2">
-                    <h4 class=" fs-3"  style="color:#b92929;">Main Office</h4>
+                    <h4 class=" fs-3" style="color:#b92929;">Main Office</h4>
                     <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
                         style="color:rgba(0,0,0,0.4)">
                         <i class="fa-solid fa-location-dot me-3 fs-4 "></i>
@@ -88,7 +103,7 @@
                     </li>
                 </ul>
                 <ul class="list-unstyled m-0 my-2">
-                    <h4 class=" fs-3"  style="color:#b92929;">Second Office</h4>
+                    <h4 class=" fs-3" style="color:#b92929;">Second Office</h4>
                     <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
                         style="color:rgba(0,0,0,0.4)">
                         <i class="fa-solid fa-location-dot me-3 fs-4 "></i>

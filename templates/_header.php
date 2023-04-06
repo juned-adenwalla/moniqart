@@ -1,4 +1,30 @@
-<?php include('includes/_clientfunctions.php'); ?>
+<?php
+
+include('includes/_clientfunctions.php');
+
+session_start();
+
+if (!isset($_SESSION['baseCurrency']) || !$_SESSION['baseCurrency'] || $_SESSION['baseCurrency'] == '') {
+  if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || $_SESSION['isLoggedIn'] == '') {
+    $_SESSION['baseCurrency'] = _siteconfig('_sitecurrency');
+  } else {
+    $userId = $_SESSION['userId'];
+    $_SESSION['baseCurrency'] = _getsingleuser($userId, '_usercurrency');
+  }
+}
+
+if (isset($_POST['currency'])) {
+  $_SESSION['baseCurrency'] = $_POST['currency'];
+}
+
+if(isset($_POST['search'])){
+
+  $name = $_POST['search'];
+
+  header("location:all-courses?course=$name&search=true");
+}
+
+?>
 <div class="topBarContainer">
   <div class="container">
     <div class="row" style="padding-top: 8px">
@@ -10,15 +36,18 @@
         </p>
       </div>
       <div class="col-2">
-        <select name="currency" id="currency" style="float:right">
-          <?php _allcurrency(); ?>
-        </select>
+        <form action="#" method="post">
+          <select name="currency" id="currency" style="float:right" onchange="this.form.submit()">
+            <?php
+            _allcurrency();
+            ?>
+          </select>
+        </form>
       </div>
     </div>
   </div>
 </div>
-<div class="navbar">
-  <nav class="customNavbar navbar navbar-dark fixed-top navbar-expand-lg p-md-3">
+  <nav class="customNavbar navbar navbar-dark navbar-expand-lg p-md-3">
     <div class="container">
       <a class="navbar-brand" href="#"><img src="<?php echo base_url('uploads/images/' . _siteconfig('_sitelogo')); ?>"
           alt=""></a>
@@ -28,7 +57,6 @@
       </button>
 
       <div class="collapse navbar-collapse " id="navbarNav">
-        <div class="mx-auto"></div>
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link text-white mx-2 " href="#">Classes</a>
@@ -46,25 +74,26 @@
             <a class="nav-link text-white mx-2 " href="#">Contact</a>
           </li>
         </ul>
+        <form method="post" action="#" class="form-inline my-2 my-lg-0 ms-auto">
+          <input class="form-control mr-sm-2 border-0 outline-0" style="box-shadow: none;font-size: 14px;"  type="search" placeholder="Search" name="search" aria-label="Search">
+        </form>
       </div>
     </div>
   </nav>
-</div>
 
 <script type="text/javascript">
   var nav = document.querySelector('nav');
 
   window.addEventListener('scroll', function () {
     if (window.pageYOffset > 0) {
-      nav.classList.add('bg-dark', 'shadow');
-      document.querySelector('nav').style.marginTop = "-10px";
-      // document.querySelector('nav').style.display = "none";
+      nav.classList.add('bg-dark', 'shadow' , 'fixed-top');
+      
     } else {
-      nav.classList.remove('bg-dark', 'shadow');
-      document.querySelector('nav').style.marginTop = "40px";
-      // document.querySelector('nav').style.display = "block";
+      nav.classList.remove('bg-dark', 'shadow', 'fixed-top');
     }
   });
+
+
   function onSelectChange() {
     document.getElementById('frm').submit();
   }

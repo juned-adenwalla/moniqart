@@ -2,13 +2,19 @@
 
 //Navbar
 
-function _allcurrency(){
+function _allcurrency()
+{
+
+    $baseCurrency = $_SESSION['baseCurrency'];
+
     require('_config.php');
     $sql = "SELECT * FROM `tblcurrency` WHERE `_status` = 'true'";
     $query = mysqli_query($conn, $sql);
     if ($query) {
-        foreach ($query as $data) {?>
-            <option value="<?php echo $data['_conversioncurrency']; ?>"><?php echo $data['_conversioncurrency']; ?></option>
+        foreach ($query as $data) { ?>
+            <option <?php if ($baseCurrency == $data['_conversioncurrency'])
+                echo "selected"; ?>
+                value="<?php echo $data['_conversioncurrency']; ?>"><?php echo $data['_conversioncurrency']; ?></option>
         <?php }
     }
 }
@@ -41,7 +47,7 @@ function _allCoursesForAllCoursesPage()
     $query = mysqli_query($conn, $sql);
     if ($query) {
         foreach ($query as $data) {
-            
+
             $courseName = strip_tags($data['_coursename']);
             $description = strip_tags($data['_coursedescription']);
 
@@ -115,8 +121,9 @@ function _getAllMarkupsForCheckout()
                 <div class="col-8">
                     <?php echo $data['_taxname'] ?> :
                 </div>
-                <div class="ml-auto price " style="color: #1c1d1f;font-weight: 400;"  >
-                    + ₹<?php echo $data['_taxamount'] ?>
+                <div class="ml-auto price " style="color: #1c1d1f;font-weight: 400;">
+                    + ₹
+                    <?php echo $data['_taxamount'] ?>
                 </div>
             </div>
         <?php }
@@ -308,6 +315,400 @@ function _paymentconfig($param)
         }
     }
 }
+
+
+// Home Page Functions 
+
+function _showLatestCourses($limit)
+{
+    require('_config.php');
+
+    $sql = "SELECT * FROM `tblcourse` ORDER BY `CreationDate` DESC  LIMIT  $limit ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+
+        foreach ($query as $data) {
+
+            $courseName = $data['_coursename'];
+            $coursePrice = $data['_pricing'];
+            $courseImg = $data['_thumbnail'];
+
+            $currency = $_SESSION['baseCurrency'];
+
+            $c = _conversion($coursePrice, $currency);
+
+            $fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+            $updateCurrency = $fmt->formatCurrency($c, $currency)
+
+
+                ?>
+            <div class="courses__card position-relative col-lg-3 col-md-12 col-12  p-0   mb-md-3 mb-sm-3 mb-3   ">
+
+                <span style="--i:1;" class="line-clamp position-absolute top-0 start-0 m-0  badge bg-white text-dark  py-3 w-100">
+                    <?php
+                    echo $courseName;
+                    ?>
+                </span>
+
+                <div class="imgDiv">
+                    <img src="./uploads/coursethumbnail/<?php echo $courseImg ?>" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>
+
+                            <?php
+                            echo $updateCurrency;
+                            ?>
+                        </span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+    }
+}
+
+
+
+
+
+
+function _showLatestBlogs($limit)
+{
+    require('_config.php');
+
+    $sql = "SELECT * FROM `tblblog` ORDER BY `CreationDate` DESC  LIMIT  $limit ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+
+        foreach ($query as $data) {
+
+            $title = $data['_blogtitle'];
+            $date = $data['Creation_at_Date'];
+            $desc = Strip_tags($data['_blogdesc']);
+            $img = $data['_blogimg'];
+
+            ?>
+            <div class="blog__card col-lg-3 col-md-12 col-12  p-0   mb-md-3 mb-sm-3 mb-3">
+                <div class="imgDiv">
+                    <img src="./uploads/blogsPics/<?php echo $img ?>" alt="">
+                </div>
+
+                <div class="content">
+                    <h4 style="--i:1;" class="line-clamp">
+                        <?php echo $title ?>
+                    </h4>
+                    <p style="--i:3;" class="line-clamp">
+                        <?php echo $desc ?>
+                    </p>
+                </div>
+
+                <div class="date">
+                    <span>
+                        <i class="fa-regular fa-calendar-days"></i>
+                        <?php echo $date ?>
+                    </span>
+                    <button><i class="fa-regular fa-heart"></i>5</button>
+                    <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
+                </div>
+            </div>
+            <?php
+        }
+    }
+}
+
+
+function _showLatestProducts($limit)
+{
+    require('_config.php');
+
+    $sql = "SELECT * FROM `tblproducts` ORDER BY `CreationDate` DESC  LIMIT  $limit ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+
+        foreach ($query as $data) {
+
+            $name = $data['_name'];
+            $img = $data['_img'];
+            $_price = $data['_price'];
+
+
+            $currency = $_SESSION['baseCurrency'];
+
+            $c = _conversion($_price, $currency);
+
+            $fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+            $updateCurrency = $fmt->formatCurrency($c, $currency)
+
+
+                ?>
+            <div class="courses__card position-relative col-lg-3 col-md-12 col-12  p-0   mb-md-3 mb-sm-3 mb-3 ">
+
+                <span style="--i:1;" class="line-clamp position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
+                    <?php
+                    echo $name;
+                    ?>
+                </span>
+
+                <div class="imgDiv">
+                    <img src="./uploads/productsPics/<?php echo $img; ?>" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>
+                            <?php
+                            echo $updateCurrency;
+                            ?>
+                        </span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+    }
+}
+
+
+
+function _showLatestMemberships($limit)
+{
+    require('_config.php');
+
+    $sql = "SELECT * FROM `tblmembership` ORDER BY `CreationDate` DESC  LIMIT  $limit ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+
+        foreach ($query as $data) {
+
+            $title = $data['_membershipname'];
+            $desc = $data['_membershipdesc'];
+
+            ?>
+            <div class="courses__card col-lg-3 col-md-12 col-12  p-0   my-md-5 my-5  subscriptionCard">
+                <div class="imgDiv d-flex flex-column align-items-center justify-content-center ">
+                    <h3>
+                        <?php echo $title ?>
+                    </h3>
+                    <p>
+                        <?php echo $desc ?>
+                    </p>
+                </div>
+                <div class="circle">
+
+                </div>
+                <button>
+                    Purchase
+                </button>
+            </div>
+
+            <?php
+        }
+    }
+}
+
+
+// All Courses Page
+
+
+function _showMoreCourses($coursename,$filter,$limit, $startfrom)
+{
+    require('_config.php');
+
+    if($coursename != ''){
+        $sql = "SELECT * FROM `tblcourse` where `_coursename` LIKE '%$coursename%' ";
+    }
+    else if($filter != ''){
+
+        if($filter == 'new'){
+            $sql = "SELECT * FROM `tblcourse` ORDER BY `CreationDate` DESC  LIMIT $startfrom,  $limit ";
+        }
+        else if($filter == 'old'){
+            $sql = "SELECT * FROM `tblcourse` ORDER BY `CreationDate` ASC  LIMIT $startfrom,  $limit ";
+        }
+        else if($filter == 'highprice'){
+            $sql = "SELECT * FROM `tblcourse` ORDER BY `_pricing` DESC  LIMIT $startfrom,  $limit ";
+        }
+        else if($filter == 'lowprice'){
+            $sql = "SELECT * FROM `tblcourse` ORDER BY `_pricing` ASC  LIMIT $startfrom,  $limit ";
+        }
+
+    }
+    else{
+        $sql = "SELECT * FROM `tblcourse` ORDER BY `CreationDate` DESC  LIMIT $startfrom,  $limit ";
+    }
+
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+
+        foreach ($query as $data) {
+
+            $courseName = $data['_coursename'];
+            $coursePrice = $data['_pricing'];
+            $courseImg = $data['_thumbnail'];
+
+            $currency = $_SESSION['baseCurrency'];
+
+            $c = _conversion($coursePrice, $currency);
+
+            $fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+            $updateCurrency = $fmt->formatCurrency($c, $currency)
+
+
+                ?>
+            <div class="courses__card position-relative col-lg-3 col-md-12 col-12  p-0 mx-2 my-3   ">
+
+                <span style="--i:1;" class="line-clamp position-absolute top-0 start-0 m-0  badge bg-white text-dark  py-3 w-100">
+                    <?php
+                    echo $courseName;
+                    ?>
+                </span>
+
+                <div class="imgDiv">
+                    <img src="./uploads/coursethumbnail/<?php echo $courseImg ?>" alt="">
+                </div>
+
+                <div class="content">
+                    <div class="headingDiv">
+                        <span>
+
+                            <?php
+                            echo $updateCurrency;
+                            ?>
+                        </span>
+                        <button><i class="fa-regular fa-heart"></i></button>
+                        <button><i class="fa-solid fa-cart-plus"></i></button>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+    }
+}
+
+function _getNoOfPagesForCourses($record_per_page, $page)
+{
+
+    require('_config.php');
+
+    $query = mysqli_query($conn, "SELECT * FROM `tblcourse`");
+    $total_records = mysqli_num_rows($query);
+    $total_pages = ceil($total_records / $record_per_page);
+    $start_loop = $page;
+    $difference = $total_pages - $page;
+
+    for ($i = 1; $i <= $total_pages; $i++) {
+        echo "
+        <li class='page-item'>
+            <a class='page-link' style='color:#b92929;' href='all-courses?page=" . $i . "'>$i</a>
+        </li>";
+    }
+
+}
+
+// Home Page 
+
+function _getHomePageDetails($param)
+{
+    require('_config.php');
+    $sql = "SELECT * FROM `tblhomepagesettings`";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+        foreach ($query as $data) {
+            return $data[$param];
+        }
+    }
+}
+
+// Contact Page 
+
+function _addContactToDb($username, $useremail, $usermessage)
+{
+
+    require('_config.php');
+
+    $stmt = $conn->prepare("INSERT INTO `tblcontact` (`_name`,`_email`, `_message`) VALUES (?, ?, ?)");
+
+    $stmt->bind_param("sss", $username, $useremail, $usermessage);
+
+    if ($stmt->execute()) {
+        $_SESSION['success'] = true;
+        header("location:");
+    }
+
+    $stmt->close();
+    $conn->close();
+
+}
+
+
+// About Us Page
+
+function _getFaqsForAboutPage()
+{
+
+    require('_config.php');
+
+    $sql = "SELECT * FROM `tblfaqs` ORDER BY `CreationDate` DESC   ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+
+        foreach ($query as $data) {
+
+            ?>
+
+            <div class="accordion rounded my-3 border -item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse<?php echo $data['_id']; ?>" aria-expanded="true"
+                        aria-controls="collapse<?php echo $data['_id']; ?>">
+                        <?php echo $data['_question'] ?>
+                    </button>
+                </h2>
+                <div id="collapse<?php echo $data['_id']; ?>" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <?php echo $data['_answer'] ?>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+
+        }
+    }
+}
+
+
+function _getPagesDescription($page)
+{
+    require('_config.php');
+
+    $sql = "SELECT * FROM `tblpagesettings` where `_id`=00000000000000000001   ";
+    $query = mysqli_query($conn, $sql);
+
+    if ($query) {
+
+        foreach ($query as $data) {
+             echo $data[$page];
+        }
+    }
+}
+
+
+// Single Course Page
 
 
 
