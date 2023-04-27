@@ -35,8 +35,9 @@ if(isset($_POST['submit'])){
     
     <!-- Style -->
     <link rel="stylesheet" href="assets/css/css/style.css">
+    <link rel="stylesheet" href="assets/frontend/css/style.css?v=<?php echo time(); ?>">
 
-    <title>Login #2</title>
+    <title>Sign Up</title>
   </head>
   <body>
   

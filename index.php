@@ -14,8 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&family=Balsamiq+Sans&fa
         mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
+    <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -37,12 +36,17 @@
 
     <?php include('templates/_header.php'); ?>
 
+    
+
     <!-- Banner Image  -->
-    <div style="--img:url(http://localhost/moniqart/moniqart/uploads/homepagebanner/<?php echo _getHomePageDetails('_bannerimg');  ?>);" class="banner-image w-100 d-flex justify-content-center align-items-center">
+    <div style="--img:url(<?php     $img =  _getHomePageDetails('_bannerimg');
+                                    echo base_url("uploads/homepagebanner/$img") 
+                                    ?>);"
+        class="banner-image w-100 d-flex justify-content-center align-items-center">
         <div class="content text-center">
             <h1 class="text-uppercase text-white fw-bold display-2">
 
-            <?php echo _getHomePageDetails('_bannertitle'); ?>
+                <?php echo _getHomePageDetails('_bannertitle'); ?>
 
             </h1>
         </div>
@@ -102,11 +106,11 @@
 
             <div class="courses__cards m-0   row w-100 justify-content-between">
 
-               <?php _showLatestCourses(4) ?>
+                <?php _showLatestCourses(4) ?>
 
 
 
-             
+
 
             </div>
 
@@ -188,7 +192,7 @@
             <div class="courses__cards m-0   row w-100 justify-content-between">
 
                 <?php
-                    _showLatestProducts(4);
+                _showLatestProducts(4);
                 ?>
 
 
@@ -216,7 +220,7 @@
 
             <div class="courses__cards m-0  my-lg-5  row w-100 justify-content-between">
 
-            <?php _showLatestMemberships(4)?>
+                <?php _showLatestMemberships(4) ?>
 
 
             </div>
@@ -277,7 +281,7 @@
 
             <div class="courses__cards m-0   row w-100 justify-content-between">
 
-               <?php _showLatestBlogs(4)?>
+                <?php _showLatestBlogs(4) ?>
 
 
             </div>

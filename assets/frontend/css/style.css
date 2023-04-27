@@ -23,6 +23,7 @@
 
 body {
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 p {
@@ -30,9 +31,13 @@ p {
     font-family: var(--secondary-font);
 }
 
+ul {
+    list-style: none !important;
+}
+
 .line-clamp {
     display: -webkit-box;
-    -webkit-line-clamp: var(--i) ;
+    -webkit-line-clamp: var(--i);
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -117,7 +122,7 @@ h3.circleAndLine::after {
 
 
 .customNavbar {
-    background: rgba(37, 37, 41,1);
+    background: rgba(37, 37, 41, 1);
 }
 
 .customNavbar li a {
@@ -845,7 +850,7 @@ footer {
 
 /* hero container */
 .hero_container {
-    background-image: url("../../../assets/images/banner/jesus_christ_bg.svg");
+    background-image: var(--img);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -854,11 +859,24 @@ footer {
 }
 
 /* key highlights */
-.key_container p {
-    color: rgba(55, 55, 55, 0.8);
+.key_container .key_container_div p {
+    color: rgba(55, 55, 55, 1);
     font-style: italic;
-    margin: 0;
+    margin: .9rem 0;
     text-align: center;
+    font-weight: 700;
+}
+
+.key_container .key_container_div li p {
+    margin: 5px 0;
+    text-align: start;
+    font-weight: 400;
+}
+
+.key_container .key_container_div li {
+    margin: 5px 0;
+    text-align: center;
+    font-weight: 400;
 }
 
 .key_div {
@@ -869,6 +887,7 @@ footer {
     border-radius: 10px;
     height: 70px;
 }
+
 
 /* key highlights ends */
 
@@ -1071,7 +1090,151 @@ footer {
 /* about page */
 
 
+
+
+/* My Account Page */
+
+
+.shadow {
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.profile-tab-nav {
+    min-width: 250px;
+}
+
+.tab-content {
+    flex: 1;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.nav-pills a.nav-link {
+    padding: 15px 20px;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0;
+    color: #333;
+}
+
+.nav-pills a.nav-link i {
+    width: 20px;
+}
+
+.img-circle img {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    border: 5px solid #fff;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background: var(--primary-color);
+}
+
+.redBtn {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+
+/* checkout */
+
+.razorpay-payment-button {
+    width: 100%;
+    margin-top: 1.4rem;
+    border: none;
+    outline: none;
+    background: #B92929;
+    color: #fff;
+    display: block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+}
+
+
+/* Header */
+
+.navbar-nav li {
+    position: relative;
+
+}
+
+.navbar-nav li ul {
+    padding: 5px;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    width: 200px;
+    background: #fff;
+    display: none;
+}
+
+.navbar-nav li ul li {
+    padding: 15px 20px;
+    display: block;
+}
+
+.navbar-nav li ul li a {
+    font-size: 15px;
+    color: #333;
+    display: block;
+    transition: .3s;
+    text-decoration: none;
+}
+
+.navbar-nav li ul li a i {
+    transition: .3s;
+}
+
+/* .navbar-nav li ul li a:focus-within i , */
+.navbar-nav li ul li a:hover i {
+    transform: rotate(-90deg);
+}
+
+.navbar-nav li ul li ul {
+    width: 300px;
+    left: 190px;
+    top: 0;
+    display: none;
+}
+
+.navbar-nav li ul li ul li a {
+    transition: .3s;
+}
+
+.navbar-nav li ul li ul li a:hover {
+    color: var(--primary-color);
+}
+
+
+/* .navbar-nav li:focus-within>ul, */
+.navbar-nav li:hover>ul {
+    display: block;
+}
+
+
+/* .navbar-nav li ul li:focus-within>ul, */
+.navbar-nav li ul li:hover>ul {
+    display: block;
+}
+
+
+
 /* Greater Than tablet */
+
+
+.lightHoverEffect:hover {
+    color: rgba(255, 255, 255, 0.5) !important;
+}
 
 
 @media screen and (min-width : 1000px) {
@@ -1088,7 +1251,7 @@ footer {
     }
 
     .download_container p {
-        width: 50%;
+        /* width: 50%; */
     }
 
 }
@@ -1104,6 +1267,36 @@ footer {
 
     .videoDiv {
         display: none;
+    }
+
+    .lessonPlansPc {
+        display: none;
+    }
+
+    /* header */
+
+
+    .navbar-nav li {
+        width: 100%;
+    }
+
+    
+    .navbar-nav li ul{
+        padding: 0 20px;
+    }
+
+    .navbar-nav li ul li {
+        padding: 10px 0;
+    }
+
+    .navbar-nav li ul {
+        position: relative;
+        width: 100%;
+    }
+
+    .navbar-nav li ul li ul {
+        width: 100%;
+        left: 0;
     }
 
 }

@@ -1,3 +1,11 @@
+<?php
+
+
+
+$id = $_GET['id'];
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -39,34 +47,50 @@
 
     <?php include('templates/_header.php'); ?>
 
-
-    <section class="hero_container">
+    <section style="--img:url(<?php $img = _getSingleCourse($id, '_banner');
+    echo base_url("uploads/coursebanner/$img")
+        ?>);" class="hero_container">
 
         <div class="container w-100 h-100 d-flex flex-column align-items-center justify-content-end">
 
-            <h2 class="text-white display-4">
-                Oil Painting
+            <h2 class="text-white display-4 text-center">
+                <?php
+                echo strip_tags(_getSingleCourse($id, '_coursename'));
+                ?>
             </h2>
 
-            <p class="fst-italic mt-3 fs-6 text-center w-75 text-white">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio corrupti molestias quidem atque quaerat
-                odio cupiditate hic cum nihil beatae!
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio corrupti molestias quidem atque quaerat
-                odio cupiditate hic cum nihil beatae!
+            <p style="--i:3;" class="line-clamp fst-italic mt-3 fs-6 text-center w-75 text-white">
+                <?php
+                $text = strip_tags(_getSingleCourse($id, '_coursedescription'));
+                echo substr($text, 0, 200);
+                ?>
             </p>
 
-            <div class="row p-0 m-0 w-100 h-25 mt-5  d-flex flex-row align-items-center justify-content-around "
-                style="background: rgba(0, 0, 0, 0.2);">
-                <div class="col-lg-3 col-md-6 col-12   d-flex align-items-center justify-content-center "> <a href="#"
-                        class="text-white fs-3 text-decoration-none ">Apply Now</a> </div>
-                <div class="col-lg-3 col-md-6 col-12   d-flex align-items-center justify-content-center "> <a href="#"
-                        class="text-white fs-3 text-decoration-none ">View Syllabus</a> </div>
-                <div class="col-3 h-100  videoDiv">
-                    <video id="my-video" class="video-js w-100 h-100" data-setup="{}" controls preload="auto"
-                    data-setup="{}"
-                        >
-                        <source src="./CSS Box Shadow Loading Animation Effects _ Box Shadow CSS ( 720 X 1278 ).mp4" type="video/mp4" />
-                    </video>
+            <div class="row w-100" style="background: rgba(0, 0, 0, 0.2);">
+                <div
+                    class="col-lg-4 col-md-4 col-6   py-lg-5 py-md-3 py-3      d-flex align-items-center justify-content-center ">
+                    <a href="checkout?id=<?php echo $id ?>"
+                        class="text-white fs-3 text-decoration-none lightHoverEffect ">Apply Now <span>(<?php  
+                                                                                                    $price = _getSingleCourse($id,'_pricing');
+                                                                                                    $currency = $_SESSION['baseCurrency'];
+                                                                                                    $convertedPrice = _conversion($price,$currency);
+                                                                                                    $fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+                                                                                                    $updateCurrency = $fmt->formatCurrency($convertedPrice, $currency);
+                                                                                                    echo $updateCurrency;
+                                                                                                     ?>)</span> </a>
+                </div>
+                <div
+                    class="col-lg-4 col-md-4 col-6   py-lg-5 py-md-3 py-3      d-flex align-items-center justify-content-center ">
+                    <a href="#lessonplans" class="text-white fs-3 text-decoration-none lightHoverEffect ">View
+                        Syllabus</a>
+                </div>
+
+                <div
+                    class="col-lg-4 col-md-4 col-12  py-lg-5 py-md-3 py-3      d-flex align-items-center justify-content-center ">
+
+                    <i class="fa-solid fa-play text-white fs-1 lightHoverEffect" style="cursor: pointer;"
+                        data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+
                 </div>
             </div>
 
@@ -79,33 +103,52 @@
 
         <div class="row px-lg-0 px-3 d-flex mt-5 flex-row align-items-center justify-content-between">
             <div class="col-lg-3 p-0  mx-lg-3 m-0 my-2 key_div">
-                <p class="fw-bold px-2 py-2">
-                    Available in both Online and Offline Formats
+                <p class="fw-bold px-2 py-2 m-0">
+                    Available in both
+                    <?php echo _getSingleCourse($id, '_coursechannel') ?> Formats
                 </p>
             </div>
             <div class="col-lg-3 p-0  mx-lg-3 m-0 my-2 key_div">
-                <p class="fw-bold px-2 py-2">
-                    Duration : 4-Weeks
+                <p class="fw-bold px-2 py-2 m-0">
+                    Duration :
+                    <?php
+
+                    $start = _getSingleCourse($id, '_startdate');
+                    $end = _getSingleCourse($id, '_enddate');
+
+                    $diff = abs(strtotime($start) - strtotime($end));
+
+                    $years = floor($diff / (365 * 60 * 60 * 24));
+                    $months = floor(($diff - $years * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
+                    $days = floor(($diff - $years * 365 * 60 * 60 * 24 - $months * 30 * 60 * 60 * 24) / (60 * 60 * 24));
+
+                    echo $days;
+
+                    ?> days
                 </p>
             </div>
             <div class="col-lg-3 p-0  mx-lg-3 m-0 my-2 key_div">
-                <p class="fw-bold px-2 py-2">
-                    Age Criteria : 15+
+                <p class="fw-bold px-2 py-2 m-0">
+                    Age Criteria :
+                    <?php echo _getSingleCourse($id, '_agelimit') ?>+
                 </p>
             </div>
             <div class="col-lg-3 p-0  mx-lg-3 m-0 my-2 key_div">
-                <p class="fw-bold px-2 py-2">
-                    Seats Available : 15
+                <p class="fw-bold px-2 py-2 m-0">
+                    Seats Available :
+                    <?php echo _getSingleCourse($id, '_capacity') ?>
                 </p>
             </div>
             <div class="col-lg-3 p-0  mx-lg-3 m-0 my-2 key_div">
-                <p class="fw-bold px-2 py-2">
-                    Starts on March 1 , 2022
+                <p class="fw-bold px-2 py-2 m-0">
+                    Starts at :
+                    <?php echo date("M j, Y", strtotime(_getSingleCourse($id, '_startdate'))) ?>
                 </p>
             </div>
             <div class="col-lg-3 p-0  mx-lg-3 m-0 my-2 key_div">
-                <p class="fw-bold px-2 py-2">
-                    Ends on March 1 , 2022
+                <p class="fw-bold px-2 py-2 m-0">
+                    Ends at :
+                    <?php echo date("M j, Y", strtotime(_getSingleCourse($id, '_enddate'))) ?>
                 </p>
             </div>
         </div>
@@ -114,12 +157,17 @@
 
     <section class="key_container container my-5 py-5">
         <h2 class="my-3 circleAndLine">ABOUT THE PROGRAM</h2>
-        <p class="fst-italic mt-3 mb-5 fs-6 text-center text-dark">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio corrupti molestias quidem atque quaerat
-            odio cupiditate hic cum nihil beatae!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio corrupti molestias quidem atque quaerat
-            odio cupiditate hic cum nihil beatae!
-        </p>
+        <div class="key_container_div fst-italic mt-5  fs-6 text-center text-dark" id="descDiv"
+            style="box-sizing: content-box; max-height: 100px; overflow: hidden;">
+            <?php
+            echo _getSingleCourse($id, '_coursedescription');
+            ?>
+        </div>
+        <div class="fs-6 fw-bold text-dark d-flex align-items-center justify-content-end" id="readMoreBtn"
+            style="cursor: pointer;">
+            Read More
+        </div>
+
     </section>
 
 
@@ -191,26 +239,31 @@
 
     </section>
 
-    <section class="download_container">
+    <section class="download_container" id="lessonplans">
 
-        <div class="container col-12 d-flex flex-column align-items-center justify-content-center py-5">
-            <p class="text-white fs-6 fst-italic  text-center">Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Porro odit ex magni cumque aliquam, amet odio minima quos, illum quia sed tempore tempora est
-                labore impedit id, voluptatem vitae distinctio.</p>
-            <a href="#" class="bg-white text-uppercase fw-bold text-decoration-none py-2 rounded px-4 fs-6">Download
-                Syllabus</a>
+        <div class="container  py-5">
+            <p class="text-white fs-4 fst-italic  text-center">Lesson Plans</p>
+            <!-- <a href="#" class="bg-white text-uppercase fw-bold text-decoration-none py-2 rounded px-4 fs-6">Download
+                Syllabus</a> -->
+
+            <div class="accordion px-lg-5 px-2 row " id="accordionExample">
+
+                <?php _getLessonPlans($id); ?>
+
+            </div>
+
         </div>
 
     </section>
 
     <section class="key_container container my-5 py-5">
         <h2 class="my-3 circleAndLine">what will you learn</h2>
-        <p class="fst-italic mt-3 mb-5 fs-6 text-center w-100  text-dark">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio corrupti molestias quidem atque quaerat
-            odio cupiditate hic cum nihil beatae!
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio corrupti molestias quidem atque quaerat
-            odio cupiditate hic cum nihil beatae!
-        </p>
+        <div class="key_container_div fst-italic my-4 fs-6 text-center w-100  text-dark">
+            <?php
+            echo _getSingleCourse($id, '_whatlearn');
+            ?>
+
+        </div>
     </section>
 
     <section class="certification_container  py-3">
@@ -290,128 +343,11 @@
 
     <section class="requirement_container container my-5 px-4 p-0">
         <h2 class="my-5 circleAndLine">Requirements</h2>
-
-        <div class="courses__cards row w-100 justify-content-between">
-
-            <div class="courses__card  position-relative col-lg-4 col-md-12 my-2 p-0">
-
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
-
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="courses__card  position-relative col-lg-4 col-md-12 my-2 p-0">
-
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
-
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="courses__card  position-relative col-lg-4 col-md-12 my-2 p-0">
-
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
-
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="courses__card  position-relative col-lg-4 col-md-12 my-2 p-0">
-
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
-
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="courses__card  position-relative col-lg-4 col-md-12 my-2 p-0">
-
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
-
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="courses__card  position-relative col-lg-4 col-md-12 my-2 p-0">
-
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
-
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-
-
+        <div class="courses__cards m-0   row w-100 justify-content-start">
+            <?php
+            _getCourseProducts($id);
+            ?>
         </div>
-
-
     </section>
 
     <section class="faqs_container container my-5">
@@ -485,6 +421,21 @@
 
     <?php include('templates/_footer.php'); ?>
 
+    <script>
+        const descDiv = document.getElementById("descDiv");
+        const readMoreBtn = document.getElementById("readMoreBtn");
+
+        readMoreBtn.addEventListener("click", () => {
+            if (descDiv.style.maxHeight == "100px") {
+                descDiv.style.maxHeight = 'max-content';
+                readMoreBtn.innerText = 'Read Less'
+            } else {
+                descDiv.style.maxHeight = "100px";
+                readMoreBtn.innerText = 'Read More'
+            }
+        })
+    </script>
+
     <!-- Jquery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
@@ -492,6 +443,30 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
+    <!-- toggle -->
+    <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+
 </body>
 
 </html>
+
+
+<!-- modal -->
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <i class="fa-solid fa-xmark" data-bs-dismiss="modal" aria-label="Close"></i>
+            </div>
+            <div class="modal-body">
+                <video id="my-video" class="video-js w-100 h-100" data-setup="{}" controls preload="auto"
+                    data-setup="{}">
+                    <source src="<?php echo _getSingleCourse($id, '_previewurl'); ?>" type="video/mp4" />
+                </video>
+            </div>
+        </div>
+    </div>
+</div>

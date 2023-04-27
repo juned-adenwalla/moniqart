@@ -95,13 +95,14 @@ function _forgetpass($userphone)
 {
     require('_config.php');
     require('_alert.php');
+
     $userpass = rand(11111111, 99999999);
     $enc_pass = md5($userpass);
     $sql = "SELECT * FROM `tblusers` WHERE `_userphone` = '$userphone'";
     $query = mysqli_query($conn, $sql);
     $count = mysqli_num_rows($query);
     if ($count > 0) {
-        $sql = "UPDATE `tblusers` SET `_userpassword`='$enc_pass' WHERE `_useremail` = '$useremail'";
+        $sql = "UPDATE `tblusers` SET `_userpassword`='$enc_pass' WHERE `_userphone` = '$userphone'";
         $query = mysqli_query($conn, $sql);
         if ($query) {
             $subject = 'Password Changed';
@@ -175,8 +176,6 @@ function _verifyotp($verifyotp)
 
 function _sendotp($otp, $userphone, $useremail)
 {
-    echo $userphone;
-
     require('_config.php');
     $sql = "SELECT * FROM `tblsmsconfig` WHERE `_supplierstatus` = 'true'";
     $query = mysqli_query($conn, $sql);
@@ -438,7 +437,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
 
             $currency_table = "CREATE TABLE IF NOT EXISTS `tblcurrency` (
                 `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
-                `_basecurrency` varchar(255) NOT NULL,
                 `_conversioncurrency` text NOT NULL,
                 `_price` varchar(255) NULL,
                 `_status` varchar(50) NOT NULL DEFAULT 'open',
@@ -451,7 +449,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_taxname` varchar(255) NOT NULL,
                 `_taxtype` text NOT NULL,
                 `_taxamount` varchar(255) NULL,
-                `_taxcurrency` varchar(255) NULL,
                 `_status` varchar(50) NOT NULL DEFAULT 'true',
                 `CreationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 `UpdationDate` datetime NULL ON UPDATE current_timestamp()
@@ -459,6 +456,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
 
             $payment_trans = "CREATE TABLE IF NOT EXISTS `tblpayment` (
                 `_id` BIGINT(20) UNSIGNED ZEROFILL PRIMARY KEY AUTO_INCREMENT NOT NULL,
+                `_razorpayid` varchar(100) NOT NULL,
                 `_useremail` varchar(255) NOT NULL,
                 `_amount` varchar(255) NULL,
                 `_currency` varchar(255) NOT NULL,
@@ -476,7 +474,6 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_couponname` varchar(255) NOT NULL,
                 `_coupontype` text NOT NULL,
                 `_couponamount` varchar(255) NULL,
-                `_couponcurrency` varchar(255) NULL,
                 `_couponcondition` varchar(255) NULL,
                 `_couponprod` varchar(255) NULL,
                 `_conamount` varchar(255) NULL,
@@ -539,6 +536,7 @@ function _install($dbhost, $dbname, $dbpass, $dbuser, $siteurl, $username, $user
                 `_coursedescription` text NOT NULL,
                 `_whatlearn` text NOT NULL,
                 `_requirements` text NOT NULL,
+                `_agelimit` text NOT NULL,
                 `_eligibilitycriteria` text NOT NULL,
                 `_capacity` varchar(50) NOT NULL,
                 `_enrollstatus` varchar(50) NOT NULL,
@@ -2419,11 +2417,11 @@ function _deleteBlog($id)
 
 // currency Functions
 
-function _createmarkup($base, $conversion, $price, $status)
+function _createmarkup( $conversion, $price, $status)
 {
     require('_config.php');
     require('_alert.php');
-    $sql = "INSERT INTO `tblcurrency`(`_basecurrency`, `_conversioncurrency`, `_price`, `_status`) VALUES ('$base','$conversion','$price','$status')";
+    $sql = "INSERT INTO `tblcurrency`( `_conversioncurrency`, `_price`, `_status`) VALUES ('$conversion','$price','$status')";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $alert = new PHPAlert();
@@ -2449,7 +2447,7 @@ function _getmarkup($conversion = '', $status = '', $limit = '', $startfrom = ''
     if ($query) {
         foreach ($query as $data) { ?>
             <tr>
-                <td><?php echo $data['_basecurrency']; ?></td>
+                <td><?php echo _siteconfig('_sitecurrency'); ?></td>
                 <td><?php echo $data['_conversioncurrency']; ?></td>
                 <td><?php echo $data['_price']; ?></td>
                 <td>
@@ -2533,11 +2531,11 @@ function _deletemarkup($id)
 
 // Tax Functions
 
-function _createtaxmarkup($name, $type, $currency, $amount, $status)
+function _createtaxmarkup($name, $type, $amount, $status)
 {
     require('_config.php');
     require('_alert.php');
-    $sql = "INSERT INTO `tbltaxes`(`_taxname`, `_taxtype`, `_taxamount`,  `_taxcurrency`, `_status`) VALUES ('$name','$type','$amount', '$currency','$status')";
+    $sql = "INSERT INTO `tbltaxes`(`_taxname`, `_taxtype`, `_taxamount`, `_status`) VALUES ('$name','$type','$amount','$status')";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $alert = new PHPAlert();
@@ -2656,11 +2654,11 @@ function _gettotal($sub, $currency, $discount)
 
 // Coupon Functions 
 
-function _createcoupon($name, $type, $amount, $condition, $conamount, $validity, $currency, $couponprod)
+function _createcoupon($name, $type, $amount, $condition, $conamount, $validity, $couponprod)
 {
     require('_config.php');
     require('_alert.php');
-    $sql = "INSERT INTO `tblcoupon`(`_couponname`, `_coupontype`, `_couponamount`, `_couponcurrency`,`_couponcondition`, `_couponprod`, `_conamount`, `_maxusage`, `_totaluse`) VALUES ('$name','$type','$amount', '$currency','$condition', '$couponprod','$conamount','$validity',0)";
+    $sql = "INSERT INTO `tblcoupon`(`_couponname`, `_coupontype`, `_couponamount`,`_couponcondition`, `_couponprod`, `_conamount`, `_maxusage`, `_totaluse`) VALUES ('$name','$type','$amount','$condition', '$couponprod','$conamount','$validity',0)";
     $query = mysqli_query($conn, $sql);
     if ($query) {
         $alert = new PHPAlert();
@@ -3044,11 +3042,14 @@ function _usetemplate($template, $data)
 // Transcations
 
 
-function _getTranscations($useremail = '', $amount = '', $status = '', $startfrom = '', $limit = '')
+function _getTranscations($razorpayid = '',$useremail = '', $amount = '', $status = '', $startfrom = '', $limit = '')
 {
 
     require('_config.php');
-    echo $amount;
+    if ($razorpayid != '') {
+        // echo $razorpayid ;
+        $sql = "SELECT * FROM `tblpayment` WHERE `_razorpayid` LIKE '%$razorpayid%'  ";
+    }
     if ($useremail != '') {
         $sql = "SELECT * FROM `tblpayment` WHERE `_useremail` LIKE '%$useremail%' ";
     }
@@ -3058,7 +3059,7 @@ function _getTranscations($useremail = '', $amount = '', $status = '', $startfro
     if ($status != '' && $useremail == '' && $amount == '') {
         $sql = "SELECT * FROM `tblpayment` WHERE `_status`='$status' ";
     }
-    if ($useremail == '' && $status == '' && $amount == '') {
+    if ($useremail == '' && $status == '' && $amount == '' && $razorpayid == '') {
         $sql = "SELECT * FROM `tblpayment` ORDER BY `CreationDate` DESC LIMIT $startfrom , $limit ";
     }
 
@@ -3068,7 +3069,7 @@ function _getTranscations($useremail = '', $amount = '', $status = '', $startfro
         foreach ($query as $data) {
             ?>
             <tr style="margin-bottom:-25px">
-                <td><?php echo $data['_id']; ?></td>
+                <td><?php echo $data['_razorpayid']; ?></td>
                 <td><?php echo $data['_useremail']; ?></td>
                 <td><?php echo $data['_amount']; ?></td>
                 <td><?php echo $data['_currency']; ?></td>
@@ -3684,7 +3685,7 @@ function _viewTranscation($useremail, $startfrom = '', $limit = '')
 
 // Course //
 
-function _createCourse($coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice)
+function _createCourse($coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice,$age)
 {
 
     require('_config.php');
@@ -3692,9 +3693,9 @@ function _createCourse($coursename,$previewurl, $courseDesc, $whatlearn, $requir
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
 
 
-    $stmt = $conn->prepare("INSERT INTO `tblcourse` (`_coursename`,`_previewurl`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`) VALUES (?, ?,?, ?, ?, ?, ?, ?, ? , ? , ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO `tblcourse` (`_coursename`,`_previewurl`, `_parmalink`,`_coursedescription`,`_whatlearn`,`_requirements`,`_eligibilitycriteria`,`_capacity`,`_enrollstatus`,`_thumbnail`,`_banner`,`_pricing`,`_status`,`_teacheremailid`,`_categoryid`,`_subcategoryid`,`_coursetype`,`_coursechannel`,`_courselevel`,`_evuluationlink`,`_startdate`,`_enddate`,`_discountprice`,`_agelimit`) VALUES (?, ?,?, ?, ?, ?, ?, ?, ? , ? , ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?)");
     // echo $stmt;
-    $stmt->bind_param("sssssssssssssssssssssss", $coursename, $previewurl, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice);
+    $stmt->bind_param("ssssssssssssssssssssssss", $coursename, $previewurl, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice,$age);
 
     if ($stmt->execute()) {
         $_SESSION['course_success'] = true;
@@ -3879,15 +3880,15 @@ function _showCourses($_courseid = '')
 }
 
 
-function _updateCourse($_id, $coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice)
+function _updateCourse($_id, $coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice,$age)
 {
 
     require('_config.php');
     $courselink = strtolower(str_replace(array(' ', '.', '&'), '-', $coursename));
 
-    $stmt = $conn->prepare("UPDATE `d` SET `_coursename`=?,`_previewurl`=?, `_parmalink`=? ,`_coursedescription`=?  , `_whatlearn`=? ,`_requirements`=?  ,`_eligibilitycriteria`=? ,`_capacity`=?  , `_enrollstatus`=? ,`_thumbnail`=?  ,`_banner`=?  , `_pricing`=? ,`_status`=?  ,`_teacheremailid`=?  , `_categoryid`=? ,`_subcategoryid`=?  , `_coursetype`=?  , `_coursechannel`=?  , `_courselevel`=?  , `_evuluationlink`=?  , `_startdate`=?  , `_enddate`=?  , `_discountprice`=?  WHERE `_id`=?  ");
+    $stmt = $conn->prepare("UPDATE `tblcourse` SET `_coursename`=?,`_previewurl`=?, `_parmalink`=? ,`_coursedescription`=?  , `_whatlearn`=? ,`_requirements`=?  ,`_eligibilitycriteria`=? ,`_capacity`=?  , `_enrollstatus`=? ,`_thumbnail`=?  ,`_banner`=?  , `_pricing`=? ,`_status`=?  ,`_teacheremailid`=?  , `_categoryid`=? ,`_subcategoryid`=?  , `_coursetype`=?  , `_coursechannel`=?  , `_courselevel`=?  , `_evuluationlink`=?  , `_startdate`=?  , `_enddate`=?  , `_discountprice`=? ,`_agelimit`=?  WHERE `_id`=?  ");
 
-    $stmt->bind_param("ssssssssssssssssssssssss", $coursename,$previewurl, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice, $_id);
+    $stmt->bind_param("sssssssssssssssssssssssss", $coursename,$previewurl, $courselink, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnail, $banner, $pricing, $status, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evuluationlink, $startdate, $enddate, $discountprice,$age, $_id);
     $stmt->execute();
 
     if ($stmt) {
@@ -3907,7 +3908,7 @@ function _deleteCourse($id)
     require('_config.php');
     require('_alert.php');
 
-    $sql = "DELETE FROM `d` WHERE `_id`='$id' ";
+    $sql = "DELETE FROM `tblcourse` WHERE `_id`='$id' ";
     $query = mysqli_query($conn, $sql);
 
     if ($query) {

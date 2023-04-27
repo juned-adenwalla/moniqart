@@ -152,12 +152,12 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3">
 
 
-                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                        <div class="col-lg-6">
                                             <?php _showCategoryOptions("", "product") ?>
 
                                         </div>
 
-                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                        <div class="col-lg-6">
                                             <?php _showSubCategoryOptions() ?>
                                         </div>
 

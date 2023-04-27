@@ -135,7 +135,7 @@ if (isset($_POST['updateImgInGallery'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Create Product |
+    <title>Edit Product |
         <?php echo _siteconfig('_sitetitle'); ?>
     </title>
     <!-- plugins:css -->
@@ -189,7 +189,7 @@ if (isset($_POST['updateImgInGallery'])) {
                                 ?>
                                 <div id="liveAlertPlaceholder">
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <strong>Product Created!</strong> New Product created successfully.
+                                        <strong>Product Update!</strong>
                                     </div>
                                 </div>
                                 <?php
@@ -199,7 +199,7 @@ if (isset($_POST['updateImgInGallery'])) {
                                 ?>
                                 <div id="liveAlertPlaceholder">
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                        <strong>Product Creatation Failed</strong>
+                                        <strong>Product Updation Failed</strong>
                                     </div>
                                 </div>
                                 <?php

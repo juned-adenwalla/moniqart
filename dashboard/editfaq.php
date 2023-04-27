@@ -41,9 +41,7 @@ if (isset($_POST['edit'])) {
 
                 <div class="col-lg-12" style="margin-top: 20px;">
                     <label for="answer" class="form-label" style="display: block;">Faq Answer</label>
-                    <textarea name="answer" id="answer" class="form-control" rows="10" style="width: 100%;">
-                    <?php echo _getSingleFaq($faqid, '_answer') ?>
-                </textarea>
+                    <textarea name="answer" id="answer" class="form-control" rows="10" style="width: 100%;"><?php echo _getSingleFaq($faqid, '_answer') ?></textarea>
 
                 </div>
 

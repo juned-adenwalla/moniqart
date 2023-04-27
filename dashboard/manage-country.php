@@ -144,7 +144,7 @@ if (isset($_POST['updateCountry'])) {
                   and clients can also
                   manage tickets through email or through the application in a web browser.
                 </p>
-                <form method="POST" action="">
+                <form method="POST" enctype="multipart/form-data" action="">
                   <div class="row">
 
                     <div class="col-lg-3" style="margin-bottom: 20px;">
@@ -268,11 +268,11 @@ if (isset($_POST['updateCountry'])) {
               <div class="row" >
                 <div class="col-lg-6">
                   <label for="countryName" class="form-label">Country Name</label>
-                  <input type="text" class="form-control" name="countryName" placeholder="Country Name">
+                  <input type="text" class="form-control" name="countryName" placeholder="Country Name" required >
                 </div>
                 <div class="col-lg-6">
                   <label for="countryCode" class="form-label">Country Code</label>
-                  <input type="text" class="form-control" name="countryCode" placeholder="Country Code">
+                  <input type="text" class="form-control" name="countryCode" placeholder="Country Code" required >
                 </div>
 
               </div>
@@ -282,12 +282,12 @@ if (isset($_POST['updateCountry'])) {
 
                 <div class="col-lg-6">
                   <label for="countryFlag" class="form-label">Country Flag</label>
-                  <input type="file" class="form-control" name="countryFlag" placeholder="Country Flag">
+                  <input type="file" class="form-control" name="countryFlag" placeholder="Country Flag" required >
                 </div>
 
                 <div class="col-lg-6" style="margin-top:40px;">
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" name="status" id="status">
+                    <input type="checkbox" class="custom-control-input" name="status" id="status" required>
                     <label class="custom-control-label" style="margin-left: 20px;" for="status">Is
                       Active</label>
                   </div>

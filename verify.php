@@ -1,5 +1,4 @@
 <?php 
-
 session_start();
 
 // if(isset($_SESSION['isLoggedIn'])){
@@ -8,7 +7,8 @@ session_start();
 //   echo "</script>";
 // }
 
-require('includes/_functions.php'); 
+require('includes/_clientfunctions.php'); 
+
 // require('includes/_alert.php'); 
 if(isset($_POST['submit'])){
   $userotp = $_POST['otp'];
@@ -46,7 +46,7 @@ if(isset($_POST['submit'])){
     <!-- Style -->
     <link rel="stylesheet" href="assets/css/css/style.css">
 
-    <title>Login #2</title>
+    <title>Verify</title>
   </head>
   <body>
   

@@ -45,6 +45,7 @@ if (isset($_POST['submit'])) {
     $previewurl = $_POST['previewurl'];
 
     $discountprice = $_POST['discountprice'];
+    $age = $_POST['age'];
 
 
     if ($_FILES["thumbnail"]["name"] != '') {
@@ -86,7 +87,7 @@ if (isset($_POST['submit'])) {
         $enrollstatus = 'false';
     }
 
-    _createCourse($coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice);
+    _createCourse($coursename,$previewurl, $courseDesc, $whatlearn, $requirements, $eligibitycriteria, $capacity, $enrollstatus, $thumbnailimg, $bannerimg, $pricing, $isactive, $teacheremailid, $categoryid, $subcategoryid, $coursetype, $coursechannel, $courselevel, $evaluationlink, $startdate, $enddate, $discountprice,$age);
 }
 
 ?>
@@ -242,22 +243,29 @@ if (isset($_POST['submit'])) {
 
                                     <div class="row g-3" style="margin-top: 20px;">
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <label htmlFor="evaluationlink" class="form-label">Evaluation Link</label>
                                             <input type="text" class="form-control" name="evaluationlink"
                                                 id="evaluationlink" required>
                                             <div class="invalid-feedback">Please type correct link</div>
                                         </div>
 
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-3">
                                             <label htmlFor="capacity" class="form-label">Capacity</label>
                                             <input type="number" class="form-control" name="capacity" id="capacity"
                                                 placeholder="Capacity" required>
                                             <div class="invalid-feedback">Please type correct capacity</div>
                                         </div>
 
+                                        <div class="col-lg-3">
+                                            <label htmlFor="age" class="form-label">Age Limit</label>
+                                            <input type="number" class="form-control" name="age" id="age"
+                                                placeholder="Capacity" required>
+                                            <div class="invalid-feedback">Please type correct capacity</div>
+                                        </div>
 
-                                        <div class="col-lg-4">
+
+                                        <div class="col-lg-3">
 
                                             <label htmlFor="coursechannel" class="form-label">Course Channel</label>
                                             <select name="coursechannel"
@@ -275,7 +283,7 @@ if (isset($_POST['submit'])) {
 
                                     </div>
 
-                                    <div class="row g-3" style="margin-top: 20px;display: none;" id="courseDates">
+                                    <div class="row g-3" style="margin-top: 20px;">
                                         <div class="col-lg-6">
                                             <label htmlFor="startdate" class="form-label">Start Date</label>
                                             <input type="date" class="form-control" name="startdate" id="startdate">
@@ -416,40 +424,6 @@ if (isset($_POST['submit'])) {
                 });
             }
             $('.select2').select2();
-
-            const dateDiv = document.getElementById("courseDates");
-
-
-
-
-            const getCourseType = (value) => {
-
-                if (value == "Live") {
-                    dateDiv.style.display = 'flex'
-                }
-                else {
-                    dateDiv.style.display = 'none'
-                }
-
-            }
-
-            const getCourseChannel = (value) => {
-
-                const courseType = document.getElementById("coursetype");
-
-                let courseTypeValue = courseType.options[courseType.selectedIndex].value;
-
-
-                if (value == "Offline") {
-                    dateDiv.style.display = 'flex'
-                }
-                else if (value == "Online" && courseTypeValue == "Recorded") {
-                    console.log("Sati");
-                    dateDiv.style.display = 'none'
-                }
-
-            }
-
 
         </script>
 

@@ -66,7 +66,7 @@ $start_from = ($page - 1) * $record_per_page;
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
             </p>
 
-            <form action="#" method="post" class="my-5">
+            <form action="#" method="post" class="my-5 w-25 ">
                 <h4>Filter By</h4>
                 <select class="form-select" name="filter" aria-label="Default select example"
                     style="border-color: #b92929;box-shadow: none;" onchange="this.form.submit()" >

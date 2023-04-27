@@ -1,3 +1,5 @@
+<?php include('templates/_header.php'); ?>
+
 <?php
 
 if (isset($_POST['submit'])) {
@@ -50,10 +52,9 @@ if (isset($_POST['submit'])) {
 
 <body>
 
-    <?php include('templates/_header.php'); ?>
  
 
-    <section class="contact__container container my-5">
+    <section class="contact__container container pt-5 my-5">
 
         <div class="row p-0 g-lg-5 g-0">
             <div class="col-lg-8  col-12  ">

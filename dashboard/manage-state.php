@@ -127,7 +127,8 @@ if (isset($_POST['updateState'])) {
                     </div> -->
                     <div class="col-lg-2" style="margin-bottom: 20px;">
                       <button type="button" class="btn btn-primary btn-sm font-weight-medium auth-form-btn"
-                        style="height:40px" >
+                        style="height:40px"  data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal" >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="white" style="width: 15px;" viewBox="0 0 448 512">
                           <!-- Font Awesome Pro 5.15.4 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) -->
                           <path
