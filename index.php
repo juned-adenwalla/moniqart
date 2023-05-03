@@ -59,27 +59,24 @@
         <div class="row py-5">
             <div
                 class="creative_col col-lg-3 col-md-6 col-12 d-flex flex-column align-items-start justify-content-evenly ">
-                <h3 class="fw-bold  w-100 text-lg-start text-sm-center"> Get Inspired</h3>
+                <h3 class="fw-bold  w-100 text-lg-start text-sm-center">WORKSHOPS</h3>
                 <p class="lead fst-italic fs-6 text-lg-start text-sm-center ">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex in labore deserunt voluptatum earum
-                    natus illum! Officia doloremque ducimus
+                    For artists and art enthusiasts to come together and learn new skills, techniques, and ideas.
                 </p>
 
             </div>
             <div
                 class="creative_col col-lg-3 col-md-6 col-12 d-flex flex-column align-items-center justify-content-between border border-0 border-end  border-dark ">
                 <img src="assets/images/icons/i1.svg" width="100px" alt="">
-                <h5 class="fw-bold py-2 ">Classes</h5>
-                <p class="lead fst-italic fs-6 text-center">For artists and art enthusiasts to come together
-                    and learn new skills, techniques, and ideas. </p>
+                <h5 class="fw-bold py-2 ">COURSES</h5>
+                <p class="lead fst-italic fs-6 text-center">Explore your creative potential and develop in-depth skills through structured art sessions. </p>
             </div>
             <div
                 class="creative_col col-lg-3 col-md-6 col-12 d-flex flex-column align-items-center justify-content-between  border border-0 border-end  border-dark   ">
                 <img src="assets/images/icons/i2.svg" width="100px" alt="">
 
-                <h5 class="fw-bold py-2 ">Courses</h5>
-                <p class="lead fst-italic fs-6 text-center">Explore your creative potential and develop in-depth skills
-                    through structured art sessions. </p>
+                <h5 class="fw-bold py-2 ">ART THERAPY</h5>
+                <p class="lead fst-italic fs-6 text-center">Enhance personal well-being, improve emotional and mental health through art. </p>
             </div>
             <div
                 class="creative_col col-lg-3 col-md-6 col-12 d-flex flex-column align-items-center justify-content-between ">
@@ -101,16 +98,12 @@
             </h2>
 
             <p class="my-4 text-center fst-italic">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
+                Learn from a class of professional artists. Get unique insights and perspectives combined with access to effective resources.
             </p>
 
             <div class="courses__cards m-0   row w-100 justify-content-between">
 
                 <?php _showLatestCourses(4) ?>
-
-
-
-
 
             </div>
 
@@ -122,10 +115,8 @@
 
     <section class="ubiquityContainer">
         <div class="container d-flex flex-column justify-content-center align-items-center">
-            <h2 class="circleAndLine">ubiquity in art</h2>
-            <p class="my-4 text-center fst-italic">Lorem ipsum dolor sit amet consectetur adipisicing elit. A mollitia
-                nam
-                adipisci? Nam, harum libero!</p>
+            <h2 class="circleAndLine">ONLINE ART COURSES</h2>
+            <p class="my-4 text-center fst-italic">Art is for everyone. Learn from anywhere in the world.</p>
             <img src="./assets/images/banner/laptop.svg" alt="">
         </div>
     </section>
@@ -146,12 +137,12 @@
 
             <div class="studio_background_div p-0 col-lg-3  col-12  mt-3 "
                 style="background: url(assets/images/banner/be2a4a_3ee8482c3b694b91a71d593dba8e411c_mv2.svg); background-size: cover; background-repeat:no-repeat; background-position: center;">
-                <span>Text on hover</span>
+                <span>Founder's Portfolio</span>
             </div>
 
             <div class="studio_background_div p-0 col-lg-3   col-12  mt-3 "
                 style="background: url(assets/images/banner/be2a4a_98f940a060f442cda5f96828caeb5401_mv2.svg); background-size: cover; background-repeat:no-repeat; background-position: center;">
-                <span>Text on hover</span>
+                <span>TAbout Moniqart</span>
             </div>
 
         </div>
@@ -164,8 +155,7 @@
 
         <div class="container d-flex flex-column justify-content-center align-items-center">
             <p class="fs-6">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea similique hic quia minus cum rerum beatae
-                dolorem numquam expedita pariatur tempore, ipsam inventore sint qui itaque alias dolores sapiente ab?
+                We believe that art has the ability to heal. Our therapy sessions are led by trained and certified art therapist Mona Joy who guides patients in the creative process, encourages them to express themselves through art, and provides support and guidance throughout the process.
             </p>
 
             <a class="fs-5" href="#">Make an appoinment</a>
