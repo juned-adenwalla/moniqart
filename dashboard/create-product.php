@@ -41,7 +41,21 @@ if (isset($_POST['submit'])) {
         $isactive = false;
     }
 
-    _createProduct($name, $sku, $price, $discountprice, $productDesc, $isactive,$categoryId,  $subcategoryId);
+    if ($_FILES["file"]["name"] != '') {
+        $file = $_FILES["file"]["name"];
+        $extension = substr($file, strlen($file) - 4, strlen($file));
+        $allowed_extensions = array(".jpg", ".jpeg", ".png", ".gif");
+        // Validation for allowed extensions .in_array() function searches an array for a specific value.
+        if (!in_array($extension, $allowed_extensions)) {
+            echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
+        } else {
+            $img = md5($file) . $extension;
+            move_uploaded_file($_FILES["file"]["tmp_name"], "../uploads/productsPics/" . $img);
+        }
+    }
+
+
+    _createProduct($name,$img, $sku, $price, $discountprice, $productDesc, $isactive, $categoryId, $subcategoryId);
 }
 
 ?>
@@ -138,12 +152,12 @@ if (isset($_POST['submit'])) {
                                     <div class="row g-3">
 
 
-                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                        <div class="col-lg-6">
                                             <?php _showCategoryOptions("", "product") ?>
 
                                         </div>
 
-                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                        <div class="col-lg-6">
                                             <?php _showSubCategoryOptions() ?>
                                         </div>
 
@@ -188,12 +202,19 @@ if (isset($_POST['submit'])) {
                                         <div class="col" style="margin-top: 40px;">
                                             <div class="custom-control custom-switch">
                                                 <input type="checkbox" class="custom-control-input" name="isactive"
-                                                    id="isactive" value="true" >
+                                                    id="isactive" value="true">
                                                 <label class="custom-control-label" style="margin-left: 20px;"
                                                     for="isactive">Is
                                                     Active</label>
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-6" style="margin-bottom: 20px;">
+                                            <label for="formFile" class="form-label">Featured Image</label>
+                                            <input class="form-control" name="file" type="file" id="formFile" required>
+                                            <div class="invalid-feedback">Featured Image Required</div>
+                                        </div>
+
                                     </div>
 
 

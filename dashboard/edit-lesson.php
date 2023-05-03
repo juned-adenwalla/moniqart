@@ -334,6 +334,26 @@ if (isset($_POST['editAttachment'])) {
 
                                     </div>
 
+                                    <div class="row g-3" style="margin-top: 20px;">
+
+                                        <div class="col-lg-6" style="display: none;" id="lessondate">
+                                            <label for="lessondate" class="form-label">Date</label>
+                                            <input type="date" class="form-control"
+                                                value="<?php echo _getSingleLesson($id, '_lessondate'); ?>"
+                                                name="lessondate">
+                                            <div class="invalid-feedback">Please select correct date</div>
+                                        </div>
+
+                                        <div class="col-lg-6" style="display: none;" id="lessontime">
+                                            <label for="lessontime" class="form-label">Time</label>
+                                            <input type="time" class="form-control"
+                                                value="<?php echo _getSingleLesson($id, '_lessontime'); ?>"
+                                                name="lessontime">
+                                            <div class="invalid-feedback">Please select correct time</div>
+                                        </div>
+
+                                    </div>
+
                                     <div class="row g-3" style="margin-top: 30px;">
 
                                         <div class="col" style="margin-top: 40px;">
@@ -384,25 +404,7 @@ if (isset($_POST['editAttachment'])) {
                                     </div>
 
 
-                                    <div class="row g-3" style="margin-top: 20px;">
-
-                                        <div class="col-lg-6" style="display: none;" id="lessondate">
-                                            <label for="lessondate" class="form-label">Date</label>
-                                            <input type="date" class="form-control"
-                                                value="<?php echo _getSingleLesson($id, '_lessondate'); ?>"
-                                                name="lessondate">
-                                            <div class="invalid-feedback">Please select correct date</div>
-                                        </div>
-
-                                        <div class="col-lg-6" style="display: none;" id="lessontime">
-                                            <label for="lessontime" class="form-label">Time</label>
-                                            <input type="time" class="form-control"
-                                                value="<?php echo _getSingleLesson($id, '_lessontime'); ?>"
-                                                name="lessontime">
-                                            <div class="invalid-feedback">Please select correct time</div>
-                                        </div>
-
-                                    </div>
+                                    
 
 
 

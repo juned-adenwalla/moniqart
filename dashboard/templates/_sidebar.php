@@ -233,6 +233,8 @@
                 <div class="collapse" id="ui-pageSettings">
                     <ul class="nav flex-column sub-menu">
                         <li class="nav-item"> <a class="nav-link"
+                                href="<?php echo base_url('dashboard/pagesetting-home'); ?>">Home</a></li>
+                        <li class="nav-item"> <a class="nav-link"
                                 href="<?php echo base_url('dashboard/pagesetting-about'); ?>">About Us</a></li>
                         <li class="nav-item"> <a class="nav-link"
                                 href="<?php echo base_url('dashboard/pagesetting-contact'); ?>">Contact Us</a></li>
@@ -243,10 +245,12 @@
                                 href="<?php echo base_url('dashboard/pagesetting-termsandcondition'); ?>">Terms</a></li>
                         <li class="nav-item"> <a class="nav-link"
                                 href="<?php echo base_url('dashboard/pagesetting-menusettings'); ?>">Menu Settings</a></li>
+                        <li class="nav-item"> <a class="nav-link"
+                                href="<?php echo base_url('dashboard/manage-contact'); ?>">Manage Contact</a></li>
                     </ul>
                 </div>
             </li>
-        <hr style="width: 100%;height:0.1px;background-color:#E5E5E5">
+            <hr style="width: 100%;height:0.1px;background-color:#E5E5E5">
 
             <!-- <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#ui-invoice" aria-expanded="false" aria-controls="ui-basic">

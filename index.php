@@ -14,8 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&family=Balsamiq+Sans&fa
         mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome Icons -->
+    <!-- font awesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -37,12 +36,18 @@
 
     <?php include('templates/_header.php'); ?>
 
+    
+
     <!-- Banner Image  -->
-    <div class="banner-image w-100 d-flex justify-content-center align-items-center">
+    <div style="--img:url(<?php     $img =  _getHomePageDetails('_bannerimg');
+                                    echo base_url("uploads/homepagebanner/$img") 
+                                    ?>);"
+        class="banner-image w-100 d-flex justify-content-center align-items-center">
         <div class="content text-center">
             <h1 class="text-uppercase text-white fw-bold display-2">
-                Transform your imagination <br />
-                into reality
+
+                <?php echo _getHomePageDetails('_bannertitle'); ?>
+
             </h1>
         </div>
     </div>
@@ -101,62 +106,10 @@
 
             <div class="courses__cards m-0   row w-100 justify-content-between">
 
-                <div class="courses__card position-relative p-0 col-lg-4 col-md-12 mb-md-3 mb-sm-3 mb-3  col-12 ">
+                <?php _showLatestCourses(4) ?>
 
-                    <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                        Jesus Offering Bread
-                    </span>
 
-                    <div class="imgDiv">
-                        <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                    </div>
 
-                    <div class="content">
-                        <div class="headingDiv">
-                            <span>Jesus Offering Bread</span>
-                            <button><i class="fa-regular fa-heart"></i></button>
-                            <button><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="courses__card position-relative p-0 col-lg-4 col-md-12 mb-md-3 mb-sm-3 mb-3  col-12 ">
-
-                    <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                        Jesus Offering Bread
-                    </span>
-
-                    <div class="imgDiv">
-                        <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                    </div>
-
-                    <div class="content">
-                        <div class="headingDiv">
-                            <span>Jesus Offering Bread</span>
-                            <button><i class="fa-regular fa-heart"></i></button>
-                            <button><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="courses__card position-relative p-0 col-lg-4 col-md-12 mb-md-3 mb-sm-3 mb-3  col-12 ">
-
-                    <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                        Jesus Offering Bread
-                    </span>
-
-                    <div class="imgDiv">
-                        <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                    </div>
-
-                    <div class="content">
-                        <div class="headingDiv">
-                            <span>Jesus Offering Bread</span>
-                            <button><i class="fa-regular fa-heart"></i></button>
-                            <button><i class="fa-solid fa-cart-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
 
 
             </div>
@@ -223,77 +176,28 @@
 
 
     <!-- Store Container -->
-    <section class="storeContainer container px-4 p-0">
+    <section class="storeContainer">
 
-        <h2 class="circleAndLine">
-            Store
-        </h2>
+        <div class="container  px-lg-0 px-4 py-5">
 
-        <p class="my-4 text-center fst-italic">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
-        </p>
 
-        <div class="courses__cards row w-100 justify-content-between">
+            <h2 class="circleAndLine">
+                Store
+            </h2>
 
-            <div class="courses__card  position-relative col-lg-3 col-md-12 my-2 p-0">
+            <p class="my-4 text-center fst-italic">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
+            </p>
 
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
+            <div class="courses__cards m-0   row w-100 justify-content-between">
 
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
+                <?php
+                _showLatestProducts(4);
+                ?>
 
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
+
+
             </div>
-
-            <div class="courses__card  position-relative col-lg-3 col-md-12 my-2 p-0">
-
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
-
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="courses__card  position-relative col-lg-3 col-md-12 my-2 p-0">
-
-                <span class="position-absolute top-0 start-0  badge bg-white text-dark  py-3 w-100">
-                    Jesus Offering Bread
-                </span>
-
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <div class="headingDiv">
-                        <span>Jesus Offering Bread</span>
-                        <button><i class="fa-regular fa-heart"></i></button>
-                        <button><i class="fa-solid fa-cart-plus"></i></button>
-                    </div>
-                </div>
-            </div>
-
-
-
         </div>
 
     </section>
@@ -301,68 +205,25 @@
 
     <!-- Subscription -->
 
-    <section class="subscriptionContainer px-4  container">
+    <section class="subscriptionContainer">
+
+        <div class="container  px-lg-0 px-4 py-5">
+
+            <h2 class="circleAndLine">
+                Subscription
+            </h2>
+
+            <p class="my-4 text-center fst-italic">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
+            </p>
 
 
-        <h2 class="circleAndLine">
-            Subscription
-        </h2>
+            <div class="courses__cards m-0  my-lg-5  row w-100 justify-content-between">
 
-        <p class="my-4 text-center fst-italic">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
-        </p>
+                <?php _showLatestMemberships(4) ?>
 
 
-        <div class="row  w-100 mt-5 justify-content-between ">
-
-            <div class="col-lg-3 col-md-5 col-xs-12 px-lg-2 px-0 my-lg-0 my-5  subscriptionCard">
-                <div class="imgDiv">
-
-                </div>
-                <div class="circle">
-
-                </div>
-                <button>
-                    Purchase
-                </button>
             </div>
-
-            <div class="col-lg-3 col-md-5 col-xs-12 px-lg-2 px-0 my-lg-0 my-5  subscriptionCard">
-                <div class="imgDiv">
-
-                </div>
-                <div class="circle">
-
-                </div>
-                <button>
-                    Purchase
-                </button>
-            </div>
-
-            <div class="col-lg-3 col-md-5 col-xs-12 px-lg-2 px-0 my-lg-0 my-5  subscriptionCard">
-                <div class="imgDiv">
-
-                </div>
-                <div class="circle">
-
-                </div>
-                <button>
-                    Purchase
-                </button>
-            </div>
-
-            <div class="col-lg-3 col-md-5 col-xs-12 px-lg-2 px-0 my-lg-0 my-5  subscriptionCard">
-                <div class="imgDiv">
-
-                </div>
-                <div class="circle">
-
-                </div>
-                <button>
-                    Purchase
-                </button>
-            </div>
-
         </div>
 
 
@@ -404,84 +265,28 @@
 
 
     <!-- Blogs -->
-    <section class="blogsContainer px-4 container">
+    <section class="blogsContainer">
 
-        <h2 class="circleAndLine">
-            Blogs
-        </h2>
-
-        <p class="my-4 text-center fst-italic">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
-        </p>
+        <div class="container px-lg-0 px-4 py-5">
 
 
-        <div class="blogs__cards row w-100 justify-content-between ">
+            <h2 class="circleAndLine">
+                Blogs
+            </h2>
 
-            <div class="blog__card col-lg-3 col-md-12 my-2 p-0">
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
+            <p class="my-4 text-center fst-italic">
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
+            </p>
 
-                <div class="content">
-                    <h4>Always in Motion</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur sapiente iusto maxime. Itaque,
-                        corrupti iste. </p>
-                </div>
 
-                <div class="date">
-                    <span>
-                        <i class="fa-regular fa-calendar-days"></i>
-                        Oct 13, 2013
-                    </span>
-                    <button><i class="fa-regular fa-heart"></i>5</button>
-                    <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
+            <div class="courses__cards m-0   row w-100 justify-content-between">
 
-            <div class="blog__card col-lg-3 col-md-12 my-2 p-0">
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
+                <?php _showLatestBlogs(4) ?>
 
-                <div class="content">
-                    <h4>Always in Motion</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur sapiente iusto maxime. Itaque,
-                        corrupti iste. </p>
-                </div>
 
-                <div class="date">
-                    <span>
-                        <i class="fa-regular fa-calendar-days"></i>
-                        Oct 13, 2013
-                    </span>
-                    <button><i class="fa-regular fa-heart"></i>5</button>
-                    <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
-                </div>
-            </div>
-
-            <div class="blog__card col-lg-3 col-md-12 my-2 p-0">
-                <div class="imgDiv">
-                    <img src="./assets/images/banner/jesus_christ_bg.svg" alt="">
-                </div>
-
-                <div class="content">
-                    <h4>Always in Motion</h4>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur sapiente iusto maxime. Itaque,
-                        corrupti iste. </p>
-                </div>
-
-                <div class="date">
-                    <span>
-                        <i class="fa-regular fa-calendar-days"></i>
-                        Oct 13, 2013
-                    </span>
-                    <button><i class="fa-regular fa-heart"></i>5</button>
-                    <button><i class="fa-sharp fa-solid fa-share-nodes"></i></button>
-                </div>
             </div>
 
         </div>
-
 
     </section>
 

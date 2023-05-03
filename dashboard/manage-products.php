@@ -88,6 +88,7 @@ $start_from = ($page - 1) * $record_per_page;
 
                                                         <th>No</th>
                                                         <th>Product Name</th>
+                                                        <th>Pic</th>
                                                         <th>SKU</th>
                                                         <th>Price</th>
                                                         <th>Status</th>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require('../includes/_functions.php');
 
 $record_per_page = 5;
@@ -11,6 +11,6 @@ if (isset($_GET["page"])) {
 if (isset($_GET["start"])) {
   $start_from = $_GET["start"];
 }
-echo _getTranscations('', '', '', $start_from ,$record_per_page);    
+echo _getTranscations('', '', '', '', $start_from, $record_per_page);
 
 ?>

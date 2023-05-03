@@ -74,13 +74,17 @@ $start_from = ($page - 1) * $record_per_page;
                 <form method="POST" action="">
                   <div class="row">
                     <div class="col-lg-3" style="margin-bottom: 20px;">
+                      <input type="text" class="form-control form-control-sm" name="razorpayid"
+                        placeholder="Search by Razorpay Id">
+                    </div>
+                    <div class="col-lg-2" style="margin-bottom: 20px;">
                       <input type="text" class="form-control form-control-sm" name="useremail" placeholder="User email">
                     </div>
-                    <div class="col-lg-3" style="margin-bottom: 20px;">
+                    <div class="col-lg-2" style="margin-bottom: 20px;">
                       <input type="text" class="form-control form-control-sm" name="transcationamount"
                         placeholder="Amount">
                     </div>
-                    <div class="col-lg-3" style="margin-bottom: 20px;">
+                    <div class="col-lg-2" style="margin-bottom: 20px;">
                       <select style="height: 40px;" name="status" class="form-control form-control-sm"
                         id="exampleFormControlSelect2" required>
                         <option value=" ">Status</option>
@@ -119,6 +123,12 @@ $start_from = ($page - 1) * $record_per_page;
                           <?php
                           if (isset($_POST['search'])) {
 
+                            if (isset($_POST['razorpayid'])) {
+                              $razorpayid = $_POST['razorpayid'];
+                            } else {
+                              $razorpayid = null;
+                            }
+
                             if (isset($_POST['useremail'])) {
                               $useremail = $_POST['useremail'];
                             } else {
@@ -137,24 +147,24 @@ $start_from = ($page - 1) * $record_per_page;
                               $status = null;
                             }
 
-                            _getTranscations($useremail, $amount, $status, '', '');
+                            _getTranscations($razorpayid, $useremail, $amount, $status, '', '');
                           }
                           if (!isset($_POST['search'])) { ?>
-                          <script>
-                            function getData() {
-                              $.ajax({
-                                url: '_payment.php',
-                                type: 'get',
-                                data: { "page": "<?php echo $page; ?>", "start": "<?php echo $start_from; ?>" },
-                                success: function (response) {
-                                  document.getElementById('table').innerHTML = response;
-                                }
-                              });
-                            }
-                            setInterval(function () {
-                              getData();
-                            }, 1000)
-                          </script>
+                            <script>
+                              function getData() {
+                                $.ajax({
+                                  url: '_payment.php',
+                                  type: 'get',
+                                  data: { "page": "<?php echo $page; ?>", "start": "<?php echo $start_from; ?>" },
+                                  success: function (response) {
+                                    document.getElementById('table').innerHTML = response;
+                                  }
+                                });
+                              }
+                              setInterval(function () {
+                                getData();
+                              }, 1000)
+                            </script>
                           <?php } ?>
                         </tbody>
                         <tbody id="table"></tbody>

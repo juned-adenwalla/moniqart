@@ -1,27 +1,28 @@
+<?php include('templates/_header.php'); ?>
+
 <?php
 
 
-session_start();
-
-
-require('./includes/_clientfunctions.php');
-
-$userLoggedIn = false;
-
 if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || $_SESSION['isLoggedIn'] == '') {
-    // $memebershipAva
+    echo "<script>";
+    echo "window.location.href = 'signin'";
+    echo "</script>";
 } else {
-    $userLoggedIn = true;
 }
 
 
-$currency = 'INR';
+$currency = $_SESSION['baseCurrency'];
+
+
+
+
+
 
 
 $_id = $_GET['id'];
 
 $courseName = _getSingleCourse($_id, '_coursename');
-$courseDesc = strip_tags(_getSingleCourse($_id, '_coursedescription'));
+$courseDesc = _getSingleCourse($_id, '_coursedescription');
 $courseImg = _getSingleCourse($_id, '_banner');
 
 $teacherId = _getSingleCourse($_id, '_teacheremailid');
@@ -30,37 +31,133 @@ $discountPrice = _getSingleCourse($_id, '_discountprice');
 
 $teacherUser = _getsingleuser($teacherId, '_username');
 
-$total = _gettotal('0', 'INR', '0') + $coursePrice;
-
-$couponAppliedSuccess = '0';
 
 
-if ($userLoggedIn) {
-    $userId = $_SESSION['userId'];
-    $currency = _getsingleuser($userId, '_usercurrency');
-    $memebershipId = _getsingleuser($userId, '_usermembership');
-    $membershipDiscount = checkmembership($coursePrice, $currency);
 
-    $total = (_gettotal('0', 'INR', '0') + $coursePrice) - $membershipDiscount;
+$convertedCoursePrice = _conversion($coursePrice, $currency);
+$fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+$updateCoursePrice = $fmt->formatCurrency($convertedCoursePrice, $currency);
+
+$convertedDiscountPrice = _conversion($discountPrice, $currency);
+$updateDiscountPrice = $fmt->formatCurrency($convertedDiscountPrice, $currency);
+
+
+
+$total = _gettotal($convertedCoursePrice, $currency, '0');
+$updateTotalPrice = $fmt->formatCurrency($total, $currency);
+
+
+
+$membership = false;
+
+$userId = $_SESSION['userId'];
+$memebershipId = _getsingleuser($userId, '_usermembership');
+$membershipDiscount = checkmembership($coursePrice, $currency);
+
+if ($membershipDiscount != false) {
+    $membership = true;
+
+    $total = _gettotal($convertedCoursePrice, $currency, $membershipDiscount);
+    $updateTotalPrice = $fmt->formatCurrency($total, $currency);
 } else {
-    $membershipDiscount = '0';
+    $membership = false;
 }
 
+
+$couponAppliedSuccess = null;
 
 if (isset($_POST['couponcode'])) {
 
     $couponCode = $_POST['couponcode'];
+    $_SESSION['coupon'] = $couponCode;
 
-    $couponPrice = _validatecoupon($coursePrice, $couponCode, 'INR', 'ecommerce');
+
+    $couponPrice = _validatecoupon($coursePrice, $couponCode, $currency, 'ecommerce');
 
     if ($couponPrice) {
 
         $couponAppliedSuccess = true;
-        $total = (_gettotal('0', 'INR', '0') + $coursePrice) - $couponPrice;
+
+        $total = _gettotal($convertedCoursePrice, $currency, $couponPrice);
+        $updateTotalPrice = $fmt->formatCurrency($total, $currency);
     } else {
         $couponAppliedSuccess = false;
     }
+} else {
+    $_SESSION['coupon'] = null;
 }
+
+$_SESSION['amount'] = $total;
+$_SESSION['currency'] = $currency;
+$_SESSION['prod'] = 'ecommerce';
+$_SESSION['prodid'] = $_id;
+
+
+// razorpay configuration
+
+
+require('razorpay-php/Razorpay.php');
+
+$keyId = 'rzp_test_J52EK80lRu54qe';
+$keySecret = 'm6hb2ug6l6uffeWieSnSKCC6';
+//Razorpay//
+use Razorpay\Api\Api;
+
+$api = new Api($keyId, $keySecret);
+
+$userId = $_SESSION['userId'];
+
+$username = _getsingleuser($userId,'_username');
+$useremail = $_SESSION['userEmailId'] ;
+$userphone = $_SESSION['userPhoneNo'];
+
+$address = "address";
+
+$webtitle =  _siteconfig('_sitetitle');;
+
+
+$pricToPay = $total;
+
+$orderData = [
+    'receipt' => 3456,
+    'amount' => $pricToPay * 100,
+    'currency' => $currency,
+    'payment_capture' => 1 // auto capture
+];
+
+$razorpayOrder = $api->order->create($orderData);
+
+$razorpayOrderId = $razorpayOrder['id'];
+
+$_SESSION['razorpay_order_id'] = $razorpayOrderId;
+
+
+$displayAmount = $amount = $orderData['amount'];
+
+
+$data = [
+    "key" => $keyId,
+    "amount" => $amount,
+    "currency" => $currency,
+    "name" => $webtitle,
+    // "image" => $imageurl,
+    "prefill" => [
+        "name" => $username,
+        "email" => $useremail,
+        "contact" => $userphone,
+    ],
+    "notes" => [
+        "address" => $address,
+        "merchant_order_id" => "12312321",
+    ],
+    "theme" => "#F37254",
+    "order_id" => $razorpayOrderId,
+];
+
+$json = json_encode($data);
+
+
+
 
 
 ?>
@@ -72,23 +169,25 @@ if (isset($_POST['couponcode'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout Page</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2&family=Balsamiq+Sans&fa
-mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
+        mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="./assets/frontend/css/style.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-    <!--=============== BOXICONS ===============-->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="assets/frontend/css/style.css?v=<?php echo time(); ?>">
+
+
+    <title>Checkout Page</title>
 
     <style>
         * {
@@ -107,24 +206,17 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
             color: rgb(15, 207, 143);
             font-weight: 680
         }
-
-        @media(max-width:567px) {
-            .mobile {
-                padding-top: 40px
-            }
-        }
     </style>
 
 </head>
 
 <body>
 
-    <?php include('templates/_header.php'); ?>
 
     <div class="container rounded bg-white mt-2">
         <div class="bg  row d-flex justify-content-center pb-5">
 
-            <div class="col-sm-4 s col-md-6 ml-1">
+            <div class="col-lg-6 col-12">
                 <div class="py-4 pl-6 d-flex flex-row">
                 </div>
 
@@ -135,19 +227,31 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
                     </h5>
 
                     <div class="d-flex align-items-center mt-4 mb-4 ">
-                        <img class="img-fluid" src="./uploads/coursebanner/<?php echo $courseImg ?>"
+                        <img class="img-fluid " src="./uploads/coursebanner/<?php echo $courseImg ?>"
                             style="border-radius:5px; width: 200px;" />
 
 
-                        <div class="d-flex flex-column align-items-start">
+                        <div class="d-flex flex-column align-items-start ms-3 ">
                             <h5 class="mt-2 ml-3" style="font-size: 21px;font-weight: 700;">
                                 <?php echo $courseName ?>
                             </h5>
                             <p class="ml-3">
-                                <span class="green d-block">₹ <?php echo $coursePrice ?></span>
-                                <s style="color:red;font-size: 20px;font-weight: 700;"> ₹<?php echo $discountPrice ?></s>
+                                <span class="green d-block">
+                                    <?php echo $updateCoursePrice ?>
+                                </span>
+                                <s style="color:red;font-size: 20px;font-weight: 700;">
+                                    <?php echo $updateDiscountPrice ?>
+                                </s>
                             </p>
                         </div>
+
+                    </div>
+
+                    <div class="fst-italic mt-5  fs-6 text-center text-dark py-4 ">
+                        <?php
+                        $desc = strip_tags($courseDesc);
+                        echo strlen($desc) > 30 ? substr($desc, 0, 150) . "..." : $desc
+                            ?>
 
                     </div>
 
@@ -155,17 +259,10 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
 
 
 
-                    <p>
-                        <?php echo $courseDesc ?>
-                    </p>
-
-
-
-
                 </div>
             </div>
 
-            <div class="col-sm-5 col-md-5 mobile">
+            <div class="col-lg-6 col-12  mobile">
                 <div class="py-4 d-flex justify-content-end">
                     <!-- <h6><a href="#">Cancel and return to website</a></h6> -->
                 </div>
@@ -179,7 +276,7 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
                     <div class="d-flex">
                         <div class="col-8">Course Price :</div>
                         <div class="ml-auto price" style="color: #1c1d1f;font-weight: 400;">
-                            ₹<?php echo $coursePrice ?>
+                            <?php echo $updateCoursePrice ?>
                         </div>
                     </div>
 
@@ -190,7 +287,7 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
                     <?php
 
 
-                    if (!isset($_SESSION['isLoggedIn']) || !$_SESSION['isLoggedIn'] || $_SESSION['isLoggedIn'] == '') {
+                    if ($membership == false) {
                         ?>
 
                         <form action="#" method="POST" class="d-flex border-top mt-2 pt-2 align-items-center ">
@@ -206,6 +303,10 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
                             if ($couponAppliedSuccess === true) {
                                 ?>
                                 <h5 class="green" style="font-size: 15px;">Coupon Code Applied !!</h5>
+                                <h6 class="green" style="font-size: 15px;">
+                                    <?php echo $updateCoursePrice ?> -
+                                    <?php echo $fmt->formatCurrency($couponPrice, $currency) ?>
+                                </h6>
                                 <?php
                             } else if ($couponAppliedSuccess === false) {
                                 ?>
@@ -225,10 +326,24 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
 
                         <div class="d-flex flex-column align-items-end mt-3">
 
-                            <h5 class="green" style="font-size: 15px; font-weight: 200;">Membership Discount : <span
-                                    style="font-weight: 600;">
-                                    <?php echo $membershipDiscount; ?>
-                                </span> </h5>
+
+
+                            <?php
+                            if ($membershipDiscount != '') {
+                                ?>
+                                <h5 class="green" style="font-size: 15px; font-weight: 200;">Membership Discount :
+                                    <span style="font-weight: 600;">
+                                        <?php echo $membershipDiscount; ?>
+                                    </span>
+                                </h5>
+                                <?php
+                            } else {
+                                ?>
+                                <h5 class="green" style="font-size: 15px; font-weight: 200;">No Membership Discount
+                                </h5>
+                                <?php
+                            }
+                            ?>
 
                         </div>
 
@@ -248,14 +363,28 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
                     <div class="pt-2 mt-3 border-top d-flex">
                         <h5 class="col-8" style="font-size: 21px; font-weight: 600;">Total Amount</h5>
                         <div class="ml-auto  price">
-                            <span style="font-size: 17px; font-weight: 600;">₹<?php echo $total; ?></span>
+                            <span style="font-size: 17px; font-weight: 600;">
+                                <?php echo $updateTotalPrice; ?>
+                            </span>
                         </div>
                     </div>
 
-                    <input type="button" value="Complete Checkout" class=" btn mt-4 btn-primary btn-block"
-                        style=" background-color:#1ab8a6; border: none; " id="purchaseBtn">
-                    <div class="text-center p-3"> <a class="text-link " target="_blank" style="color: black;"
-                            href="#">Cancel</a> </div>
+
+
+                    <form action="check.php" method="POST">
+                        <script src="https://checkout.razorpay.com/v1/checkout.js" data-key="<?php echo $data['key'] ?>"
+                            data-amount="<?php echo $data['amount'] ?>" data-currency="<?php echo $data['currency'] ?>"
+                            data-name="<?php echo $data['name'] ?>"
+                            data-prefill.name="<?php echo $data['prefill']['name'] ?>"
+                            data-prefill.email="<?php echo $data['prefill']['email'] ?>"
+                            data-prefill.contact="<?php echo $data['prefill']['contact'] ?>"
+                            data-order_id="<?php echo $data['order_id'] ?>">
+
+                            </script>
+                    </form>
+
+                    <div class="text-center p-3"> <a class="text-link " style="color: black;" href="index">Cancel</a>
+                    </div>
                 </div>
 
 
@@ -264,173 +393,27 @@ mily=Comfortaa&family=Montserrat&family=Poppins&display=swap" rel="stylesheet">
         </div>
     </div>
 
-    <footer class=" footer" id="footer">
-
-        <div class="footer__container container">
-
-            <div class="footer__top row">
-
-                <div class="footer__column_1">
-
-                    <a href="index.html" class="footer__logo">
-                        <img src="https://virtuoso.qodeinteractive.com/wp-content/uploads/2015/10/logo-footer.png"
-                            alt="">
-                    </a>
-
-                    <p class="footer__logo__description">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore.
-                    </p>
-
-                    <div class="footer__logo__info">
-                        <div class="footer__logo__item">
-                            <i class="bx bx-envelope-open"></i>
-                            <span>info@gmail.com</span>
-                        </div>
-                        <div class="footer__logo__item">
-                            <i class="bx bx-phone-incoming"></i>
-                            <span>1-444-123-4559</span>
-                        </div>
-                        <div class="footer__logo__item">
-                            <i class="bx bx-home"></i>
-                            <span>Rokin 90-94, 1012 Amsterdam</span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="footer__column_2">
-
-                    <h1 class="footer__heading">Recent Posts</h1>
-
-                    <p class="footer__post__item">
-                        <a href="#">
-                            Always In Motion November 6, 2015
-                        </a>
-                    </p>
-
-                    <p class="footer__post__item">
-                        <a href="#">
-                            Cloud Descending November 6, 2015
-                        </a>
-                    </p>
-
-                    <p class="footer__post__item">
-                        <a href="#">
-                            Front Page Story November 6, 2015
-                        </a>
-                    </p>
-
-                    <p class="footer__post__item">
-                        <a href="#">
-                            Contagious Ideas November 6, 2015
-                        </a>
-                    </p>
+    <?php include('templates/_footer.php'); ?>
 
 
-                </div>
-
-                <div class="footer__column_3">
-
-                    <h1 class="footer__heading">Instagram</h1>
-
-
-                </div>
-
-                <div class="footer__column_4">
-
-                    <h1 class="footer__heading">Contact Us</h1>
-
-                    <form action="#" class="footer__contact__form">
-                        <input type="text" placeholder="Your Name">
-                        <input type="text" placeholder="Your Email">
-                        <textarea name="" id="" cols="30" rows="3">Comment</textarea>
-                        <button>
-                            submit
-                        </button>
-                    </form>
-
-
-                </div>
-
-            </div>
-
-            <div class="footer__bottom">
-
-                <div class="footer__copyright">
-                    <p>© 2015 Qode Interactive, All Rights Reserved</p>
-                </div>
-
-                <ul class="footer__social-menu">
-
-
-                    <li class="social-menu-list">
-                        <a href="#">
-                            <i class="bx bxl-facebook"></i>
-                        </a>
-                    </li>
-
-                    <li class="social-menu-list">
-                        <a href="#">
-                            <i class="bx bxl-instagram"></i>
-                        </a>
-                    </li>
-
-                    <li class="social-menu-list">
-                        <a href="#">
-                            <i class="bx bxl-twitter"></i>
-                        </a>
-                    </li>
-
-                    <li class="social-menu-list">
-                        <a href="#">
-                            <i class="bx bxl-linkedin"></i>
-                        </a>
-                    </li>
-
-                </ul>
-
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
 
     <script>
-        var options = {
-            "key": "<?php echo _paymentconfig('_apikey'); ?>", // Enter the Key ID generated from the Dashboard
-            "amount": "<?php echo ceil($total * 100); ?>", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "<?php echo $currency; ?>",
-            "name": "<?php echo _paymentconfig('_companyname'); ?>",
-            "description": "Payment for your Purchase",
-            "image": "http://localhost/Adenwalla-Infotech/moniqart-development/uploads/images/logo.png",
-            // "order_id": "OD<?php echo rand(111111, 999999) ?>", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "handler": function (response) {
-                console.log('response', response);
-                document.getElementById('transpay').click();
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#4B49AC"
+        const descDiv = document.getElementById("descDiv");
+        const readMoreBtn = document.getElementById("readMoreBtn");
+
+        readMoreBtn.addEventListener("click", () => {
+            if (descDiv.style.maxHeight == "100px") {
+                descDiv.style.maxHeight = 'max-content';
+                readMoreBtn.innerText = 'Read Less'
+            } else {
+                descDiv.style.maxHeight = "100px";
+                readMoreBtn.innerText = 'Read More'
             }
-        };
-        var rzp1 = new Razorpay(options);
-
-        rzp1.on('payment.failed', function (response) {
-            window.location.href = "failed";
-        });
-        document.getElementById('purchaseBtn').onclick = function (e) {
-            rzp1.open();
-            // e.preventDefault();
-        }
+        })
     </script>
-
 
 
 </body>
