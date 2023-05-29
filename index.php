@@ -59,32 +59,31 @@
         <div class="row py-5">
             <div
                 class="creative_col col-lg-3 col-md-6 col-12 d-flex flex-column align-items-start justify-content-evenly ">
-                <h3 class="fw-bold  w-100 text-lg-start text-sm-center">WORKSHOPS</h3>
+                <h3 class="fw-bold  w-100 text-lg-start text-sm-center">GET INSPIRED</h3>
                 <p class="lead fst-italic fs-6 text-lg-start text-sm-center ">
-                    For artists and art enthusiasts to come together and learn new skills, techniques, and ideas.
+                    At MONIQART, we cover a full-range of courses across all levels of creativity and education.
                 </p>
 
             </div>
             <div
                 class="creative_col col-lg-3 col-md-6 col-12 d-flex flex-column align-items-center justify-content-between border border-0 border-end  border-dark ">
                 <img src="assets/images/icons/i1.svg" width="100px" alt="">
-                <h5 class="fw-bold py-2 ">COURSES</h5>
-                <p class="lead fst-italic fs-6 text-center">Explore your creative potential and develop in-depth skills through structured art sessions. </p>
+                <h5 class="fw-bold py-2 ">WORKSHOPS</h5>
+                <p class="lead fst-italic fs-6 text-center">For artists and art enthusiasts to come together and learn new skills, techniques, and ideas.</p>
             </div>
             <div
                 class="creative_col col-lg-3 col-md-6 col-12 d-flex flex-column align-items-center justify-content-between  border border-0 border-end  border-dark   ">
                 <img src="assets/images/icons/i2.svg" width="100px" alt="">
 
-                <h5 class="fw-bold py-2 ">ART THERAPY</h5>
-                <p class="lead fst-italic fs-6 text-center">Enhance personal well-being, improve emotional and mental health through art. </p>
+                <h5 class="fw-bold py-2 ">COURSES</h5>
+                <p class="lead fst-italic fs-6 text-center">Explore your creative potential and develop in-depth skills through structured art sessions.</p>
             </div>
             <div
                 class="creative_col col-lg-3 col-md-6 col-12 d-flex flex-column align-items-center justify-content-between ">
                 <img src="assets/images/icons/i3.svg" width="100px" alt="">
 
-                <h5 class="fw-bold py-2 ">Art Therapy</h5>
-                <p class="lead fst-italic fs-6 text-center">Enhance personal well-being, improve emotional and mental
-                    health through art.</p>
+                <h5 class="fw-bold py-2 ">ART THERAPY</h5>
+                <p class="lead fst-italic fs-6 text-center">Enhance personal well-being, improve emotional and mental health through art.</p>
             </div>
         </div>
     </section>
@@ -92,7 +91,7 @@
     <!-- Courses -->
     <section class="coursesContainer ">
 
-        <div class="container  px-lg-0 px-4 py-5">
+        <div class="container px-lg-0 px-4 py-5">
             <h2 class="circleAndLine">
                 Courses
             </h2>
@@ -129,9 +128,7 @@
             <div class="studioBackgroundContainer__content p-0 py-4 col-lg-5 col-12 ">
                 <h4 class="fw-bold display-6 text-lg-start text-center ">STUDIO BACKGROUND</h4>
                 <p class="fs-6 text-lg-start text-center ">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facere doloribus alias minus distinctio
-                    nobis.
-                    Ipsam hic asperiores est laudantium? Explicabo cupiditate assumenda accusantium, soluta
+                Moniqart strives to foster imagination and creativity in our studio by helping students create beautiful art. Whether you’re coming in to spend the day or to truly exploit your talent, you’ll find a blank canvas awaiting you where the world is your oyster. We opened our doors in 2006 and have been creating art and forming artists since.
                 </p>
             </div>
 
@@ -142,7 +139,7 @@
 
             <div class="studio_background_div p-0 col-lg-3   col-12  mt-3 "
                 style="background: url(assets/images/banner/be2a4a_98f940a060f442cda5f96828caeb5401_mv2.svg); background-size: cover; background-repeat:no-repeat; background-position: center;">
-                <span>TAbout Moniqart</span>
+                <span>About Moniqart</span>
             </div>
 
         </div>
@@ -176,7 +173,7 @@
             </h2>
 
             <p class="my-4 text-center fst-italic">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
+                Equip Yourself for Artistic Brilliance
             </p>
 
             <div class="courses__cards m-0   row w-100 justify-content-between">
@@ -184,8 +181,6 @@
                 <?php
                 _showLatestProducts(4);
                 ?>
-
-
 
             </div>
         </div>
@@ -200,18 +195,17 @@
         <div class="container  px-lg-0 px-4 py-5">
 
             <h2 class="circleAndLine">
-                Subscription
+                MEMBERSHIPS
             </h2>
 
             <p class="my-4 text-center fst-italic">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
+                Become a member today and avail extra benefits!
             </p>
 
 
             <div class="courses__cards m-0  my-lg-5  row w-100 justify-content-between">
 
                 <?php _showLatestMemberships(4) ?>
-
 
             </div>
         </div>
@@ -228,23 +222,23 @@
             <div class="row w-100 py-lg-5 py-4 h-100 m-0 ">
 
                 <div class="col-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
-                    <h3 class="display-2">99</h3>
-                    <span>Students</span>
+                    <h3 class="display-2">15+</h3>
+                    <span>Years of Experience</span>
                 </div>
 
                 <div class="col-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
-                    <h3 class="display-2">99</h3>
-                    <span>Teachers</span>
+                    <h3 class="display-2">3000+</h3>
+                    <span>No. Of Artist Members</span>
                 </div>
 
                 <div class="col-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
-                    <h3 class="display-2">99</h3>
-                    <span>Students</span>
+                    <h3 class="display-2">5000+</h3>
+                    <span>No. Of students enrolled</span>
                 </div>
 
                 <div class="col-3 h-100 p-0 d-flex flex-column align-items-center justify-content-center ">
-                    <h3 class="display-2">99</h3>
-                    <span>Teachers</span>
+                    <h3 class="display-2">6000+</h3>
+                    <span>No. Of classes conducted</span>
                 </div>
 
             </div>

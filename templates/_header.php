@@ -68,7 +68,7 @@ if (isset($_POST['search'])) {
     <div class="collapse navbar-collapse " id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link text-white mx-2 " href="#">Coureses</a>
+          <a class="nav-link text-white mx-2 " href="all-courses">Courses</a>
 
           <ul>
 
@@ -82,10 +82,13 @@ if (isset($_POST['search'])) {
           <a class="nav-link text-white mx-2 " href="about">About</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-white mx-2 " href="#">Art Therapy</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-white mx-2 " href="#">Blog</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white mx-2 " href="#">Pricing</a>
+          <a class="nav-link text-white mx-2 " href="myaccount">My Account</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white mx-2 " href="contact">Contact</a>

@@ -6,9 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-
-
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,8 +28,6 @@
 
     <title>About Page</title>
 
-
-
 </head>
 
 <body>
@@ -45,8 +40,8 @@
 
 
             <div class="col-lg-4 col-12">
-                <img class="w-100"
-                    src="https://virtuoso.qodeinteractive.com/wp-content/uploads/2015/10/about-1-img-1.jpg" alt="">
+                <img class="w-100" style="border-radius:12px"
+                    src="assets/images/About-us-Image.webp" alt="About us Image">
             </div>
 
             <div class="col-lg-8 col-12">
@@ -70,11 +65,10 @@
                 </div>
                 <div class="about_item_right ms-lg-3 m-0">
                     <h3 class=" text-lg-start text-center fs-5 py-lg-3 py-1 " style="color:rgba(0,0,0,0.8)">
-                        Awesome Features
+                        Skill Development
                     </h3>
                     <p class="text-lg-start text-center fs-6" style="color:rgba(0,0,0,0.5)">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem ullam totam nostrum dolor?
-                        Culpa debitis incidunt dolor! Nihil
+                        We offer art workshops and classes that provide structured learning environments where participants can enhance their artistic skills.
                     </p>
                 </div>
             </article>
@@ -87,11 +81,10 @@
                 </div>
                 <div class="about_item_right ms-lg-3 m-0">
                     <h3 class=" text-lg-start text-center fs-5 py-lg-3 py-1 " style="color:rgba(0,0,0,0.8)">
-                        Awesome Features
+                        Creative Exploration
                     </h3>
                     <p class="text-lg-start text-center fs-6" style="color:rgba(0,0,0,0.5)">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem ullam totam nostrum dolor?
-                        Culpa debitis incidunt dolor! Nihil
+                        Our studio fosters an environment that encourages creative exploration and free expression of ideas.
                     </p>
                 </div>
             </article>
@@ -104,11 +97,10 @@
                 </div>
                 <div class="about_item_right ms-lg-3 m-0">
                     <h3 class=" text-lg-start text-center fs-5 py-lg-3 py-1 " style="color:rgba(0,0,0,0.8)">
-                        Awesome Features
+                        Art Therapy and Emotional Well-being
                     </h3>
                     <p class="text-lg-start text-center fs-6" style="color:rgba(0,0,0,0.5)">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem ullam totam nostrum dolor?
-                        Culpa debitis incidunt dolor! Nihil
+                        Art therapy can help manage stress, improve self-esteem, enhance emotional well-being, and provide a healthy outlet for processing emotions.
                     </p>
                 </div>
             </article>
@@ -121,11 +113,10 @@
                 </div>
                 <div class="about_item_right ms-lg-3 m-0">
                     <h3 class=" text-lg-start text-center fs-5 py-lg-3 py-1 " style="color:rgba(0,0,0,0.8)">
-                        Awesome Features
+                        Exhibition and Showcase Opportunities
                     </h3>
                     <p class="text-lg-start text-center fs-6" style="color:rgba(0,0,0,0.5)">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem ullam totam nostrum dolor?
-                        Culpa debitis incidunt dolor! Nihil
+                        We hold events that offer opportunities to share your artwork with a wider audience, receive feedback, and gain exposure.
                     </p>
                 </div>
             </article>
@@ -138,11 +129,10 @@
                 </div>
                 <div class="about_item_right ms-lg-3 m-0">
                     <h3 class=" text-lg-start text-center fs-5 py-lg-3 py-1 " style="color:rgba(0,0,0,0.8)">
-                        Awesome Features
+                        Exam Preparation
                     </h3>
                     <p class="text-lg-start text-center fs-6" style="color:rgba(0,0,0,0.5)">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem ullam totam nostrum dolor?
-                        Culpa debitis incidunt dolor! Nihil
+                        Art exam preparation sessions provide valuable guidance and support for individuals aiming to excel in art-related exams.
                     </p>
                 </div>
             </article>
@@ -155,11 +145,10 @@
                 </div>
                 <div class="about_item_right ms-lg-3 m-0">
                     <h3 class=" text-lg-start text-center fs-5 py-lg-3 py-1 " style="color:rgba(0,0,0,0.8)">
-                        Awesome Features
+                        Access to Resources and Materials
                     </h3>
                     <p class="text-lg-start text-center fs-6" style="color:rgba(0,0,0,0.5)">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quidem ullam totam nostrum dolor?
-                        Culpa debitis incidunt dolor! Nihil
+                        Get access to a variety of art materials, tools, and resources and gain hands-on experience using professional-grade materials.
                     </p>
                 </div>
             </article>
@@ -170,7 +159,7 @@
     </section>
 
 
-    <section class="our_team__container my-5 py-5">
+    <section class="our_team__container my-5 py-5" style="display:none">
 
         <h3 class="circleAndLine">Our Team</h3>
 
@@ -242,7 +231,7 @@
 
     </section>
 
-    <section class="pencil__container container mt-5 pt-5 px-lg-0 px-5">
+    <section class="pencil__container container mt-5 pt-5 px-lg-0 px-5" style="display:none">
 
         <div class="row">
 
@@ -266,20 +255,27 @@
 
     </section>
 
+    <section class="makeAnAppinmentSection py-5">
+        <div class="container d-flex flex-column justify-content-center align-items-center">
+            <p class="fs-6">
+                We believe that art has the ability to heal. Our therapy sessions are led by trained and certified art therapist Mona Joy who guides patients in the creative process, encourages them to express themselves through art, and provides support and guidance throughout the process.
+            </p>
+
+            <a class="fs-5" href="#">Make an appoinment</a>
+
+        </div>
+    </section>
+
     <section class="faqs_container container my-5">
+        <h3 class="fs-3 fw-bold text-dark">Our FAQ'S</h3>
 
-        <h3 class="px-lg-5 px-2 display-6">FAQ'S</h3>
 
-
-        <div class="accordion px-lg-5 px-2" id="accordionExample">
+        <div class="accordion" id="accordionExample">
 
             <?php _getFaqsForAboutPage(); ?>
         
         </div>
-
-
     </section>
-
 
     <?php include('templates/_footer.php'); ?>
 

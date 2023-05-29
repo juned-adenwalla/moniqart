@@ -25,7 +25,7 @@ if (isset($_POST['submitfooter'])) {
                         src="<?php echo base_url('uploads/images/' . _siteconfig('_sitelogo')); ?>" alt="">
                 </a>
                 <p class="pt-lg-0 pt-3">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. In at officia corporis nesciunt placeat
+                    At MONIQART, we cover a full-range of courses across all levels of creativity and education. We aim to inspire you no matter where you are with our online presence. Take a look at what we offer.
                 </p>
 
 
@@ -35,7 +35,7 @@ if (isset($_POST['submitfooter'])) {
                 <span class="pt-lg-0 pt-3"> <i class="fa-solid fa-phone"></i>
                     <?php echo _siteconfig('_sitephone'); ?>
                 </span>
-                <span class="pt-lg-0 pt-3"> <i class="fa-solid fa-location-dot"></i> Address </span>
+                <span class="pt-lg-0 pt-3"> <i class="fa-solid fa-location-dot"></i> Row house No 1, Jitender co-op society, Plot no 91, Sector 3, Koparkhairne, Navi Mumbai, Pin code- 400709 </span>
             </div>
 
             <div
@@ -69,7 +69,7 @@ if (isset($_POST['submitfooter'])) {
                 <h2>Maps</h2>
                 <div style="width: 100%"><iframe width="100%" height="200" frameborder="0" scrolling="no"
                         marginheight="0" marginwidth="0" style="border-radius: 10px;"
-                        src="https://maps.google.com/maps?width=100%25&amp;height=300&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"><a
+                        src="https://www.google.com/maps/embed/v1/place?q=Moniqart+-+Art+Therapy+online+/+offline,+Sector+3,+Kopar+Khairane,+Navi+Mumbai,+Maharashtra,+India&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"><a
                             href="https://www.maps.ie/distance-area-calculator.html">area maps</a></iframe></div>
             </div>
 
@@ -111,7 +111,7 @@ if (isset($_POST['submitfooter'])) {
                 <a class="m-lg-0 ms-3 " href="#">
                     <i class="fa-brands fa-facebook"></i>
                 </a>
-                <a class="m-lg-0 ms-3 " href="#">
+                <a class="m-lg-0 ms-3 " href="https://www.instagram.com/moniqart.in/">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
                 <a class="m-lg-0 ms-3 " href="#">

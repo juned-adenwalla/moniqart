@@ -63,7 +63,7 @@ $start_from = ($page - 1) * $record_per_page;
             </h2>
 
             <p class="my-4 text-center fst-italic">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, culpa.
+            Learn from a class of professional artists. Get unique insights and perspectives combined with access to effective resources.
             </p>
 
             <form action="#" method="post" class="my-5 w-25 ">

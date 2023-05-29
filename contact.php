@@ -61,8 +61,7 @@ if (isset($_POST['submit'])) {
 
                 <h4 class="fs-2">GET IN <span style="color:#b92929;">TOUCH!</span> </h4>
                 <p class="fs-6 text-start" style="color:rgba(0,0,0,0.4)">
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut
-                    laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam.
+                    Welcome to Moniqart. Write to us and our executive will revert within 48 hours.
                 </p>
 
                 <form action="#" method="post" class="d-flex flex-column justify-content-start align-items-start">
@@ -81,50 +80,28 @@ if (isset($_POST['submit'])) {
 
             <div class="col-lg-4 col-12  border py-4 px-lg-5  px-3 m-lg-0 mt-3 ">
                 <ul class="list-unstyled m-0 my-2">
-                    <h4 class=" fs-3" style="color:#b92929;">Main Office</h4>
+                    <h4 class=" fs-3" style="color:#b92929;">REACH US</h4>
                     <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
                         style="color:rgba(0,0,0,0.4)">
                         <i class="fa-solid fa-location-dot me-3 fs-4 "></i>
-                        Rokin 94, 1012 Amsterdam
+                        Row house No 1, Jitender co-op society, Plot no 91, Sector 3, Koparkhairne, Navi Mumbai, Pin code- 400709
                     </li>
                     <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
                         style="color:rgba(0,0,0,0.4)">
                         <i class="fa-solid fa-phone me-3 fs-4 "></i>
-                        Phone: +88 (0) 101 0000 000
-                    </li>
-                    <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
-                        style="color:rgba(0,0,0,0.4)">
-                        <i class="fa-solid fa-fax me-3 fs-4 "></i>
-                        Fax: +88 (0) 202 0000 001
+                        Phone: <?php echo _siteconfig('_sitephone'); ?>
                     </li>
                     <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
                         style="color:rgba(0,0,0,0.4)">
                         <i class="fa-solid fa-envelope me-4 fs-4 "></i>
-                        Email: youremail@yourdomain.com
+                        Email: <?php echo _siteconfig('_siteemail'); ?>
                     </li>
                 </ul>
                 <ul class="list-unstyled m-0 my-2">
-                    <h4 class=" fs-3" style="color:#b92929;">Second Office</h4>
-                    <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
-                        style="color:rgba(0,0,0,0.4)">
-                        <i class="fa-solid fa-location-dot me-3 fs-4 "></i>
-                        Rokin 94, 1012 Amsterdam
-                    </li>
-                    <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
-                        style="color:rgba(0,0,0,0.4)">
-                        <i class="fa-solid fa-phone me-3 fs-4 "></i>
-                        Phone: +88 (0) 101 0000 000
-                    </li>
-                    <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
-                        style="color:rgba(0,0,0,0.4)">
-                        <i class="fa-solid fa-fax me-3 fs-4 "></i>
-                        Fax: +88 (0) 202 0000 001
-                    </li>
-                    <li class="fs-6 py-3 d-flex flex-row justify-content-start align-items-center"
-                        style="color:rgba(0,0,0,0.4)">
-                        <i class="fa-solid fa-envelope me-3 fs-4 "></i>
-                        Email: youremail@yourdomain.com
-                    </li>
+                <div style="width: 100%"><iframe width="100%" height="200" frameborder="0" scrolling="no"
+                        marginheight="0" marginwidth="0" style="border-radius: 10px;"
+                        src="https://www.google.com/maps/embed/v1/place?q=Moniqart+-+Art+Therapy+online+/+offline,+Sector+3,+Kopar+Khairane,+Navi+Mumbai,+Maharashtra,+India&key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU17R8"><a
+                            href="https://www.maps.ie/distance-area-calculator.html">area maps</a></iframe></div>
                 </ul>
             </div>
 
