@@ -82,7 +82,7 @@ if (isset($_POST['search'])) {
           <a class="nav-link text-white mx-2 " href="about">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white mx-2 " href="#">Art Therapy</a>
+          <a class="nav-link text-white mx-2 " href="art-therapy">Art Therapy</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white mx-2 " href="#">Blog</a>
